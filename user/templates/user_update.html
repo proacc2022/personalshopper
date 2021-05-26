@@ -1,0 +1,72 @@
+{% extends 'homeBase2.html' %}
+
+{% block title %}  {{ user.first_name }} Profile  Update{% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">User Profile Update</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    {% include "user_panel.html" %}
+                </div>
+
+                <div class="col-md-9">
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">User Profile Update</h3>
+                        </div>
+                    </div>
+
+                    <form method="POST" enctype = "multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                                                    {% for field in user_form %}
+                            {% if not forloop.last %}
+                            <p>
+                                {{ field.label_tag }}<br>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <small style="color: grey">{{ field.help_text }}</small>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+                            </p>
+                            {% endif %}
+                        {% endfor %}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="primary-btn" type="submit">Update</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}
+{% block footer %} {%  include 'footer.html'  %} {% endblock %}

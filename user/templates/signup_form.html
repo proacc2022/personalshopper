@@ -1,0 +1,185 @@
+{% extends 'homeBase3.html' %}
+
+{% block title %} User Sign Up  {{ setting.title }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% load crispy_forms_tags %}
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+
+	<!-- BREADCRUMB -->
+	
+	{% comment %} <div id="breadcrumb">
+		<div class="container">
+		
+			<ul class="breadcrumb breadcrumb-2">
+				<li><a href="/">Home</a></li>
+				<li class="active">User Sign Up</li>
+			</ul>
+		</div>
+	</div> {% endcomment %}
+
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<hr id='special-hr'>
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+                <div class="col-md-12">
+                    <div class="billing-details">
+
+                        <div class="section-title">
+                            <h3 class="title">Sign Up Form</h3>
+                        </div>
+
+                        <form method="post" id="validateForm">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group">
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            {% for field in form1 %}
+                                <div class="form-group">
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            {% for field in form2 %}
+                                <div class="form-group">
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <button type="submit" class="primary-btn">Sign up</button>
+                        </form>
+
+
+
+                    </div>
+                </div>
+
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+		<script  src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
+		<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+		<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+<script>
+    $('#validateForm').bootstrapValidator({
+feedbackIcons: {
+	valid: 'glyphicon glyphicon-ok',
+	invalid: 'glyphicon glyphicon-remove',
+	validating: 'glyphicon glyphicon-refresh'
+},
+fields: {
+	first_name: {
+		validators: {
+			stringLength: {
+				min: 2,
+				message: 'Please Enter your Full name with minimum 2 letters length'
+			},
+			notEmpty: {
+				message: 'Please Enter your Full name'
+			}
+		}
+	},
+	last_name: {
+		validators: {
+			stringLength: {
+				min: 2,
+				message: 'Please Enter your Full name with minimum 2 letters length'
+			},
+			notEmpty: {
+				message: 'Please Enter your Full name'
+			}
+		}
+	},
+	phone: {
+		validators: {
+			numeric: {
+				message: 'The phone no must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter your phone number'
+			}
+		}
+	},
+	pin_code: {
+		validators: {
+			numeric: {
+				message: 'The pin code no must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter pin-code'
+			}
+		}
+	},
+	address: {
+		validators: {
+			stringLength: {
+				min: 15,
+				max: 100,
+				message:'Please enter at least 15 characters and no more than 100'
+			},
+			notEmpty: {
+				message: 'Please Enter Address'
+			}
+		}
+	},
+
+	email: {
+		validators: {
+			notEmpty: {
+				message: 'Please Enter your email address'
+			},
+			emailAddress: {
+				message: 'Please Enter a valid email address'
+			}
+		}
+	},
+	password1: {
+		validators: {
+			notEmpty: {
+				message: 'Enter your profile password'
+			}
+		}
+	},
+	password2: {
+		validators: {
+			notEmpty: {
+				message: 'Enter confirm your profile password'
+			},
+			identical: {
+				field: 'password1',
+				message: 'Enter the password, what enter in password field'
+			}
+		}
+	 },
+
+	}
+});
+
+</script>
+{% endblock %}
+{% block footer %} {%  include 'footer.html'  %} {% endblock %}

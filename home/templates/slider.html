@@ -1,0 +1,32 @@
+{% load static %}
+	<!-- HOME -->
+	<div id="home">
+		<!-- container -->
+		{% comment %} <div class="container"> {% endcomment %}
+			<!-- home wrap -->
+			<div class="home-wrap">
+				<!-- home slick -->
+				<div id="home-slick">
+					{% for product in sliderProducts %}
+					<!-- banner -->
+					<div class="banner banner-1">
+						<img class="slider-banner-image" src="{{product.product_image.url}}" alt="{{product.product_image.url}}">
+						<div class="banner-caption text-center">
+							<h1> {{ product.product_name }} </h1>
+							<h3 class="white-color font-weak">₹ {{product.product_price}}</h3>
+							<br>
+							{% comment %} <button class="primary-btn">Shop Now</button> {% endcomment %}
+							<a href="/product/{{product.id}}/{{product.slug}}" class="primary-btn">Shop Now</a>
+						</div>
+					</div>
+					<!-- /banner -->
+					{% endfor %}
+
+				</div>
+				<!-- /home slick -->
+			</div>
+			<!-- /home wrap -->
+		{% comment %} </div> {% endcomment %}
+		<!-- /container -->
+	</div>
+	<!-- /HOME -->

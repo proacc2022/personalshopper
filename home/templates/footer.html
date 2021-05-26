@@ -1,0 +1,38 @@
+{% load static %}
+<!-- FOOTER -->
+	<footer class="section1 section-grey">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<!-- footer copyright -->
+					<div class="footer-copyright">
+						
+						Copyright <span class='copyright-symbol'>&copy; </span><script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+						<span class='at-symbol'>@</span> Personal Shopper
+						
+					</div>
+					<!-- /footer copyright -->
+				</div>
+			</div>
+			<!-- /row -->
+		<!-- /container -->
+	</footer>
+	<!-- /FOOTER -->
+
+		<!-- jQuery Plugins -->
+
+	<script src="{% static '' %}js/jquery.min.js"></script>
+	<script src="{% static '' %}js/bootstrap.min.js"></script>
+	<script src="{% static '' %}js/slick.min.js"></script>
+	<script src="{% static '' %}js/nouislider.min.js"></script>
+	<script src="{% static '' %}js/jquery.zoom.min.js"></script>
+	<script src="{% static '' %}js/main.js"></script>
+
+	<script type=text/javascript>
+		if ($(document).height() > $(window).height()){
+			$("footer").removeClass('fixed-footer');
+		}
+		else{
+			$("footer").addClass('fixed-footer');
+		}
+	</script>

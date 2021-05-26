@@ -1,0 +1,99 @@
+{% extends 'homeBase2.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %}  {{ user.first_name }} Profile  Update{% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">User Profile Update</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    {% include "user_panel.html" %}
+                </div>
+
+                <div class="col-md-9">
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">User Address Update</h3>
+                        </div>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ formset.management_form }}
+                        {{ formset.non_form_errors }}
+                        {% if formset.total_form_count > 1 %}
+                        <br><h3 class="title">You Can Edit or delete saved addresses.</h3><br><br>
+                        {%endif%}
+                        <div>
+                        {% for form in formset %}
+                            {% if forloop.last %}
+                            {% if formset.total_form_count > 1 %}
+                                <br><h3 class="title">You May add more addresses. </h3><br><br>
+                            {% else%}
+                                <br><h3 class="title">Please Fill the following details.</h3><br><br>
+                            {%endif%}
+                            {% for field in form %}
+                                    {% if not "Delete:" in field.label_tag %}
+                                    {% if not "Id:" in field.label_tag %}
+                                        {% if not forloop.last %}
+                                            {{ field.errors }}
+                                            <div style="width:90%; margin-left:10%">
+                                                <div style="width:25%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                                <div style="width:50%; float:left;"><p style="display:inline;">{{ field }}</p></div><br>
+                                            </div><br>
+                                        {%endif%}
+                                    {%endif%}
+                                    {%endif%}
+                                {% endfor %}
+                            {% else %}
+                            <div><h4 class="title">Address {{forloop.counter}}</h4></div>
+                                {% for field in form %}
+                                    {% if not "Id:" in field.label_tag %}
+                                        {% if not forloop.last %}
+                                            {{ field.errors }}
+                                            <div style="width:90%; margin-left:10%">
+                                                <div style="width:25%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                                <div style="width:50%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                            </div>
+                                        {%endif%}
+                                    {% else %}
+                                        {{ field.errors }}{{ field }}
+                                    {%endif%}
+                                 {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        </div><br><br>
+                        <div><button class="primary-btn" type="submit" style="margin-left:40%;" >Save the Changes</button></div>
+                    </form>
+
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}
+{% block footer %} {%  include 'footer.html'  %} {% endblock %}

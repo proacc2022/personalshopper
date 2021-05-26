@@ -1,0 +1,81 @@
+{% extends 'homeBase2.html' %}
+
+{% block title %}  {{ user.first_name }} Profile {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">User Profile</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    {% include "user_panel.html" %}
+                </div>
+
+                <div class="col-md-9">
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">Your Profile Information</h3>
+                        </div>
+                    </div>
+                     <table class="shopping-cart-table table">
+                        <tr>
+                            <th class="text-left">Name</th>
+                            <td class="text-left">{{ user.first_name}} {{ user.last_name}} </td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Email</th>
+                            <td class="text-left">{{ user.email}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Phone</th>
+                            <td class="text-left">
+                                <ul>
+                            {% for prof2 in profile2 %}
+                                    <li> {{ prof2.phone }}</li>
+                            {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Address</th>
+                            <td class="text-left">
+                                <ul>
+                            {% for prof in profile1 %}
+                                    <li> {{ prof.address }} {{ prof.city }} {{ prof.state }} {{ prof.pin_code }} {{ prof.country }} </li>
+                            {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}
+{% block footer %} {%  include 'footer.html'  %} {% endblock %}

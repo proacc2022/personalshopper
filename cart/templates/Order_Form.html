@@ -1,0 +1,124 @@
+{% extends 'homeBase.html' %}
+{% block title %} Order Page {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+{%load static%}
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">Order Page</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div  class="row">
+
+                    <div class="col-md-6">
+                <Form id="thisform" method="post" data-url="%url 'orderproduct'%"">
+                    {% csrf_token %}
+                        <div class="billing-details">
+                            <div class="section-title">
+                                <h3 class="title">Shopcart Product List</h3>
+                            </div>
+                            <div>
+                                {% for field in form %}
+                                {% if not forloop.last %}
+                                    <div style="width:80%;">
+                                        <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                        <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                    </div><br>
+                                {%else%}
+                                    <br><br>
+                                    <div style="width:80%;">
+                                        <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                        <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                    </div><br>
+                                {% endif %}
+                                {%endfor%}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <div class="col-md-6">
+                    <div class="order-summary clearfix">
+                        <div class="section-title">
+                            <h3 class="title">Shopcart Product List</h3>
+                        </div>
+                        <table class="shopping-cart-table table" id="taskList">
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th class="empty" colspan="3"></th>
+                                <th>SUBTOTAL</th>
+                                <th colspan="2" class="sub-total">Rs. {{ total}}</th>
+                            </tr>
+                            <tr>
+                                <th class="empty" colspan="3"></th>
+                                <th>SHIPPING CHARGES</th>
+                                <td colspan="2">Rs. <div id="nothing1" style="display:none;"> 10 </div> <div id="nothing2" style="display:none;"> 0 </div></td>
+                            </tr>
+                            <tr>
+                                <th class="empty" colspan="3"></th>
+                                <th>TOTAL</th>
+                                <th colspan="2" class="total">Rs. <div id="nothing11" style="display:none;">{{total|add:"10"}}.00</div> <div id="nothing22" style="display:none;">{{total}}</div> </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                                                    <div>
+                                <button  type="submit" class="primary-btn">Complete Order</button>
+                            </div>
+
+
+                    </div>
+
+                </div>
+</Form>
+
+            </div>
+            <div id="results"></div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+<script>
+    function dislaydeliverycharge() {
+      var element = document.getElementById("id_deloptionselection_0");
+      var element2 = document.getElementById("id_deloptionselection_1");
+      if (element.checked) {
+          document.getElementById('nothing1').style.display = 'inline';
+          document.getElementById('nothing2').style.display = 'none';
+          document.getElementById('nothing11').style.display = 'inline';
+          document.getElementById('nothing22').style.display = 'none';
+      }
+      else if (element2.checked) {
+          document.getElementById('nothing2').style.display = 'inline';
+          document.getElementById('nothing1').style.display = 'none';
+          document.getElementById('nothing22').style.display = 'inline';
+          document.getElementById('nothing11').style.display = 'none';
+      }
+      else {
+          document.getElementById('nothing1').style.display = 'none';
+          document.getElementById('nothing2').style.display = 'none';
+          document.getElementById('nothing11').style.display = 'none';
+          document.getElementById('nothing22').style.display = 'none';
+      }
+    }
+</script>
+
+{% endblock %}
+{% block footer %}{% include 'footer.html' %}{% endblock %}
