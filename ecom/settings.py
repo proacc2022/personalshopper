@@ -96,6 +96,7 @@ DATABASES = {
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -153,6 +154,7 @@ CKEDITOR_CONFIGS = {
 
 ###################################
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SERVER_EMAIL = 'personalshopper.ibm@gmail.com'
@@ -170,4 +172,4 @@ DEFAULT_FROM_EMAIL = 'personalshopper.ibm@gmail.com'
 WHITENOISE_USE_FINDERS = True
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

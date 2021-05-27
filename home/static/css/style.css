@@ -568,6 +568,8 @@ textarea.input {
 }
 
 .category-nav .category-list {
+	overflow: auto;
+	height: 450px;
 	position: absolute;
 	width: 18%;
 	margin-right: 1.5%;

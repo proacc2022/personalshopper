@@ -9,13 +9,20 @@ from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 from chatterbot.trainers import ListTrainer
 from urllib.parse import unquote
+from ecom import settings
 
 
 def index(request):
     category = Category.objects.all()
+
     sliderProducts = Product.objects.all().order_by('id')[:4]
     latestProducts = Product.objects.all().order_by('-id')[:4]
     randomProducts = Product.objects.all().order_by('?')[:4]
+
+    # print(sliderProducts)
+    # print(latestProducts)
+    # print(randomProducts)
+
     page = 'home'
     context = {'page': page,
                'category': category,
@@ -139,15 +146,17 @@ def search(request):
 
 
 chatbot = ChatBot('PSBot',
-                  storage_adapter = "chatterbot.storage.SQLStorageAdapter"
+                  storage_adapter="chatterbot.storage.SQLStorageAdapter",
+                  database=settings.DATABASES,
+                  database_uri='postgres://postgres:Ok12Ok43@@localhost:5432/my_db'
                   )
-
+# '/my_db'
 # Create a new trainer for the chatbot
 trainer1 = ChatterBotCorpusTrainer(chatbot)
 
 # Train the chatbot based on the english corpus
-trainer1.train("chatterbot.corpus.english")
-
+trainer1.train("chatterbot.corpus.english.conversations")
+trainer1.train("chatterbot.corpus.english.greetings")
 # Train based on the english corpus
 
 # Already trained and it's supposed to be persistent
