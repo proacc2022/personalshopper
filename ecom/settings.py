@@ -26,7 +26,7 @@ SECRET_KEY = 'gt!cp3f-xuafnn@vwr%z^f%h=_e-lx#5r6t6nv6(-08tfji3f)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'https://personal-shopper-website.herokuapp.com/', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'https://personal-shopper-website.herokuapp.com/', 'localhost', 'personal-shopper-website.herokuapp.com']
 
 # Application definition
 
