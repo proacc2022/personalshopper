@@ -148,7 +148,6 @@ def search(request):
 chatbot = ChatBot('PSBot',
                   storage_adapter="chatterbot.storage.SQLStorageAdapter",
                   database=settings.DATABASES,
-                  database_uri='postgres://postgres:Ok12Ok43@@localhost:5432/my_db'
                   )
 # '/my_db'
 # Create a new trainer for the chatbot
