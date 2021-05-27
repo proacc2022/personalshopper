@@ -25,7 +25,6 @@ pymongo==3.11.4
 pyparsing==2.4.7
 python-dateutil==2.7.5
 pytz==2021.1
-PyYAML==3.13
 regex==2021.4.4
 six==1.16.0
 SQLAlchemy==1.2.19
@@ -46,3 +45,4 @@ docutils~=0.17.1
 certifi~=2020.12.5
 setuptools~=56.0.0
 attrs~=21.2.0
+PyYAML==3.13
