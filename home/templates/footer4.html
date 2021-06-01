@@ -1,0 +1,326 @@
+{% load static %}
+<!-- FOOTER -->
+	<footer class="section1">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<!-- footer copyright -->
+					<div class="footer-copyright">
+						
+						Copyright <span class='copyright-symbol'>&copy; </span><script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+						<span class='at-symbol'>@</span> Personal Shopper
+						
+					</div>
+					<!-- /footer copyright -->
+				</div>
+			</div>
+			<!-- /row -->
+		<!-- /container -->
+	</footer>
+	<!-- /FOOTER -->
+
+		<!-- jQuery Plugins -->
+
+	<script src="{% static '' %}js/jquery.min.js"></script>
+	<script src="{% static '' %}js/bootstrap.min.js"></script>
+	<script src="{% static '' %}js/slick.min.js"></script>
+	<script src="{% static '' %}js/nouislider.min.js"></script>
+	<script src="{% static '' %}js/jquery.zoom.min.js"></script>
+	<script src="{% static '' %}js/main.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+
+	<script type=text/javascript>
+		if ($(document).height() > $(window).height()){
+			$("footer").removeClass('fixed-footer');
+		}
+		else{
+			$("footer").addClass('fixed-footer');
+		}
+	</script>
+
+    <script>
+    function dislaydeliverycharge() {
+      var element = document.getElementById("id_deloptionselection_0");
+      var element2 = document.getElementById("id_deloptionselection_1");
+      if (element.checked) {
+          document.getElementById('nothing1').style.display = 'inline';
+          document.getElementById('nothing2').style.display = 'none';
+          document.getElementById('nothing11').style.display = 'inline';
+          document.getElementById('nothing22').style.display = 'none';
+      }
+      else if (element2.checked) {
+          document.getElementById('nothing2').style.display = 'inline';
+          document.getElementById('nothing1').style.display = 'none';
+          document.getElementById('nothing22').style.display = 'inline';
+          document.getElementById('nothing11').style.display = 'none';
+      }
+      else {
+          document.getElementById('nothing1').style.display = 'none';
+          document.getElementById('nothing2').style.display = 'none';
+          document.getElementById('nothing11').style.display = 'none';
+          document.getElementById('nothing22').style.display = 'none';
+      }
+    }
+    function yesnoCheck() {
+      if (document.getElementById('stn').checked) {
+          document.getElementById('stnfilter').style.display = 'block';
+          document.getElementById('postfilter').style.display = 'none';
+          document.getElementById('dor1filter').style.display = 'none';
+          document.getElementById('dor2filter').style.display = 'none';
+      }
+      else if (document.getElementById('post').checked) {
+          document.getElementById('postfilter').style.display = 'block';
+          document.getElementById('stnfilter').style.display = 'none';
+          document.getElementById('dor1filter').style.display= 'none';
+          document.getElementById('dor2filter').style.display = 'none';
+      }
+      else if (document.getElementById('dor1').checked) {
+          document.getElementById('dor1filter').style.display = 'block';
+          document.getElementById('postfilter').style.display = 'none';
+          document.getElementById('stnfilter').style.display = 'none';
+          document.getElementById('dor2filter').style.display = 'none';
+      }
+      else if (document.getElementById('dor2').checked) {
+          document.getElementById('dor2filter').style.display = 'block';
+          document.getElementById('postfilter').style.display = 'none';
+          document.getElementById('stnfilter').style.display = 'none';
+          document.getElementById('dor1filter').style.display = 'none';
+      }
+      else {
+          document.getElementById('stnfilter').style.display = 'none';
+          document.getElementById('postfilter').style.display = 'none';
+          document.getElementById('dor1filter').style.display = 'none';
+          document.getElementById('dor2filter').style.display = 'none';
+      }
+    }
+
+    $('#thisform1').bootstrapValidator({
+feedbackIcons: {
+	valid: 'glyphicon glyphicon-ok',
+	invalid: 'glyphicon glyphicon-remove',
+	validating: 'glyphicon glyphicon-refresh'
+},
+fields: {
+	ccardnumber: {
+		validators: {
+			numeric: {
+				message: 'Card Must must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter Card Number'
+			},
+			stringLength: {
+				min: 16,
+				max: 16,
+				message: 'Card Should be of 16 digits'
+			}
+		}
+	},
+	cexpmonth: {
+		validators: {
+			numeric: {
+				message: 'Expiry month must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter Expiry Month'
+			},
+			stringLength: {
+				max: 2,
+				message: 'Enter Expiry month'
+			}
+		}
+	},
+	cexpyear: {
+		validators: {
+			numeric: {
+				message: 'Expiry Year must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter Expiry Year'
+			},
+			stringLength: {
+			    min: 4,
+				max: 4,
+				message: 'Enter Expiry year'
+			}
+		}
+	},
+	cnameoncard: {
+		validators: {
+			notEmpty: {
+				message: 'Please Enter Name on Card'
+			},
+			stringLength: {
+			    min: 2,
+				max: 100,
+				message: 'Enter Valid value'
+			}
+		}
+	},
+    ccvv: {
+		validators: {
+			numeric: {
+				message: 'CVV must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter CVV'
+			},
+			stringLength: {
+			    min: 3,
+				max: 3,
+				message: 'Enter 3 digit CVV'
+			}
+		}
+	}
+	}
+});
+    $('#thisform2').bootstrapValidator({
+feedbackIcons: {
+	valid: 'glyphicon glyphicon-ok',
+	invalid: 'glyphicon glyphicon-remove',
+	validating: 'glyphicon glyphicon-refresh'
+},
+fields: {
+	dcardnumber: {
+		validators: {
+			numeric: {
+				message: 'Card Must must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter Card Number'
+			},
+			stringLength: {
+				min: 16,
+				max: 16,
+				message: 'Card Should be of 16 digits'
+			}
+		}
+	},
+	dexpmonth: {
+		validators: {
+			numeric: {
+				message: 'Expiry month must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter Expiry Month'
+			},
+			stringLength: {
+				max: 2,
+				message: 'Enter Expiry month'
+			}
+		}
+	},
+	dexpyear: {
+		validators: {
+			numeric: {
+				message: 'Expiry Year must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter Expiry Year'
+			},
+			stringLength: {
+			    min: 4,
+				max: 4,
+				message: 'Enter Expiry year'
+			}
+		}
+	},
+	dnameoncard: {
+		validators: {
+			notEmpty: {
+				message: 'Please Enter Name on Card'
+			},
+			stringLength: {
+			    min: 2,
+				max: 100,
+				message: 'Enter Valid value'
+			}
+		}
+	},
+    dcvv: {
+		validators: {
+			numeric: {
+				message: 'CVV must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter CVV'
+			},
+			stringLength: {
+			    min: 3,
+				max: 3,
+				message: 'Enter 3 digit CVV'
+			}
+		}
+	}
+	}
+});
+
+    $('#thisform3').bootstrapValidator({
+feedbackIcons: {
+	valid: 'glyphicon glyphicon-ok',
+	invalid: 'glyphicon glyphicon-remove',
+	validating: 'glyphicon glyphicon-refresh'
+},
+fields: {
+	upiid: {
+		validators: {
+			notEmpty: {
+				message: 'Please Enter UPI ID'
+			},
+			stringLength: {
+				min: 5,
+				max: 100,
+				message: 'Enter Valid value'
+			},
+			regexp: {
+                regexp: /^[a-z0-9_@.]+$/,
+                message: 'UPI ID can only consist of alphabets, numbers, _ , @ and .'
+            }
+		}
+	}
+	}
+});
+
+
+    $('#thisform4').bootstrapValidator({
+feedbackIcons: {
+	valid: 'glyphicon glyphicon-ok',
+	invalid: 'glyphicon glyphicon-remove',
+	validating: 'glyphicon glyphicon-refresh'
+},
+fields: {
+	paytmnumber: {
+		validators: {
+			numeric: {
+				message: 'Mobile number must be a number'
+			},
+			notEmpty: {
+				message: 'Please Enter your mobile number'
+			},
+			stringLength: {
+				min: 10,
+				max: 10,
+				message: 'Mobile number should be of 10 digits'
+			}
+		}
+	}
+	}
+});
+</script>
+
+<script>
+	    function hideButton()
+    {
+      document.getElementById('stnfilter').style.display = 'none';
+      document.getElementById('postfilter').style.display = 'none';
+      document.getElementById('dor1filter').style.display = 'none';
+      document.getElementById('dor2filter').style.display = 'none';
+      var w = document.getElementsByTagName('input');
+      for(var i = 0; i < w.length; i++){
+        if(w[i].type=='radio'){
+          w[i].checked = false;
+        }
+      }
+    }
+</script>

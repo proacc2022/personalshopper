@@ -18,7 +18,15 @@
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
-
+	                {% if messages %}
+                    {% for message in messages %}
+                        {% if forloop.last %}
+                        <div class="alert alert-{{message.tags}}" role="alert" style="margin-left:41%;margin-right:41%;;background:#AFE0F9;color:black;">
+                            {{ message |safe }}
+                        </div>
+                        {%endif%}
+                    {% endfor %}
+                {% endif %}
 	<!-- section -->
 	<div class="section">
 		<!-- container -->

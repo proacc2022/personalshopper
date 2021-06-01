@@ -45,7 +45,7 @@ class SignUp2Form(forms.ModelForm):
                             (attrs={'class': 'form-control', 'style': 'width:500px', 'required': 'true'}))
     pin_code = forms.IntegerField(label='Pin Code :',
                                   widget=forms.TextInput
-                                  (attrs={'class': 'form-control', 'style': 'width:500px', 'required': 'true'}))
+                                  (attrs={'type':'number', 'class': 'form-control', 'style': 'width:500px', 'required': 'true'}))
     country = forms.CharField(max_length=100, label='Country :',
                               widget=forms.TextInput
                               (attrs={'class': 'form-control', 'style': 'width:500px', 'required': 'true'}))
@@ -58,7 +58,7 @@ class SignUp2Form(forms.ModelForm):
 class SignUp3Form(forms.ModelForm):
     phone = forms.IntegerField(label='Phone :',
                                widget=forms.TextInput
-                               (attrs={'class': 'form-control', 'style': 'width:500px', 'required': 'true'}))
+                               (attrs={'type':'number', 'class': 'form-control', 'style': 'width:500px', 'required': 'true'}))
 
     class Meta:
         model = User2Profile

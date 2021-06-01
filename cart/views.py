@@ -31,9 +31,6 @@ def addtoshopcart(request, id):
                 if leftover >= 0:
                     data.quantity += form.cleaned_data['quantity']
                     data.save()  # save data
-                    messages.success(request, "Product added to Shopcart ")
-                else:
-                    messages.info(request, "Out of Stock. Decrease your quantity and try.")
             else:  # Insert to Shopcart
                 data = ShopCart()
                 data.user_id = current_user.id
@@ -42,9 +39,6 @@ def addtoshopcart(request, id):
                 if leftover >= 0:
                     data.quantity = form.cleaned_data['quantity']
                     data.save()
-                    messages.success(request, "Product added to Shopcart ")
-                else:
-                    messages.info(request, "Out of Stock. Decrease your quantity and try.")
 
         return HttpResponseRedirect(url)
 
@@ -56,9 +50,6 @@ def addtoshopcart(request, id):
             if leftover >= 0:
                 data.quantity += 1
                 data.save()
-                messages.success(request, "1 item added to Shopcart ")
-            else:
-                messages.info(request, "Out of stock. Cannot add item")
         else:  # Inser to Shopcart
             data = ShopCart()  # model ile bağlantı kur
             data.user_id = current_user.id
@@ -67,9 +58,6 @@ def addtoshopcart(request, id):
             if leftover >= 0:
                 data.quantity = 1
                 data.save()  #
-                messages.success(request, "Product added to Shopcart ")
-            else:
-                messages.info(request, "Out of Stock.")
         return HttpResponseRedirect(url)
 
 
@@ -98,7 +86,6 @@ def shopcart(request):
 @login_required(login_url='/login')  # Check login
 def deletefromcart(request, id):
     ShopCart.objects.filter(id=id).delete()
-    messages.success(request, "Your item deleted form Shopcart.")
     return HttpResponseRedirect("/shopcart")
 
 
@@ -110,7 +97,6 @@ def addproduct(request, id):
     data.quantity += 1
     data.save()  #
 
-    messages.success(request, "Product added to Shopcart")
     return HttpResponseRedirect("/shopcart")
 
 
@@ -123,9 +109,6 @@ def reduceproduct(request, id1, id2):
     data.save()
     if data.quantity == 0:
         ShopCart.objects.filter(id=id2).delete()
-        messages.success(request, "Your item deleted form Shopcart.")
-    else:
-        messages.success(request, "Product reduced from Shopcart")
     return HttpResponseRedirect("/shopcart")
 
 
@@ -173,71 +156,118 @@ def orderproduct(request):
     print(choices_list)
 
     if request.method == 'POST':  # if there is a post
-        form = OrderForm(request.POST)
-        print(form.fields['paymethodselection'].choices)
-        print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-        form.fields['paymethodselection'].choices = choices_list
-        print(form.fields['paymethodselection'].choices)
-        # return HttpResponse(request.POST.items())
-        if form.is_valid():
-            print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
-            data = Order()
-            selection = form.data['addoptionselection']
-            selection2 = form.data['phoneoptionselection']
-            print(selection)
-            print(selection2)
-            data.first_name = current_user.first_name
-            data.last_name = current_user.last_name
-            data.address = User1Profile.objects.values_list('address', flat=True).get(id=selection)
-            data.city = User1Profile.objects.values_list('city', flat=True).get(id=selection)
-            data.pin_code = User1Profile.objects.values_list('pin_code', flat=True).get(id=selection)
-            data.state = User1Profile.objects.values_list('state', flat=True).get(id=selection)
-            data.country = User1Profile.objects.values_list('country', flat=True).get(id=selection)
-            data.phone = User2Profile.objects.values_list('phone', flat=True).get(id=selection2)
-            data.user_id = current_user.id
-            data.delivery_type = form.data['deloptionselection']
-            print(total)
-            if data.delivery_type == "Express Delivery":
-                data.delivery_charge = 10
+        if request.POST.get("form_type") == 'formOne':
+            form = OrderForm(request.POST)
+            print(form.fields['paymethodselection'].choices)
+            print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+            form.fields['paymethodselection'].choices = choices_list
+            print(form.fields['paymethodselection'].choices)
+            # return HttpResponse(request.POST.items())
+            if form.is_valid():
+                print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
+                data = Order()
+                selection = form.data['addoptionselection']
+                selection2 = form.data['phoneoptionselection']
+                print(selection)
+                print(selection2)
+                data.first_name = current_user.first_name
+                data.last_name = current_user.last_name
+                data.address = User1Profile.objects.values_list('address', flat=True).get(id=selection)
+                data.city = User1Profile.objects.values_list('city', flat=True).get(id=selection)
+                data.pin_code = User1Profile.objects.values_list('pin_code', flat=True).get(id=selection)
+                data.state = User1Profile.objects.values_list('state', flat=True).get(id=selection)
+                data.country = User1Profile.objects.values_list('country', flat=True).get(id=selection)
+                data.phone = User2Profile.objects.values_list('phone', flat=True).get(id=selection2)
+                data.user_id = current_user.id
+                data.delivery_type = form.data['deloptionselection']
+                print(total)
+                if data.delivery_type == "Express Delivery":
+                    data.delivery_charge = 10
+                else:
+                    data.delivery_charge = 0
+                total = total + data.delivery_charge
+                data.paymentmethod = form.cleaned_data['paymethodselection']
+                data.total = total
+                print(total)
+                data.ip = request.META.get('REMOTE_ADDR')
+                ordercode = get_random_string(5).upper()  # random cod
+                data.code = ordercode
+                data.save()
+
+                for rs in shopcart:
+                    detail = OrderProduct()
+                    detail.order_id = data.id  # Order Id
+                    detail.product_id = rs.product_id
+                    detail.user_id = current_user.id
+                    detail.quantity = rs.quantity
+                    detail.price = rs.product.product_discount
+                    asf = rs.product.product_discount * rs.quantity
+                    detail.amount = asf
+                    detail.save()
+                    product = Product.objects.get(id=rs.product_id)
+                    product.product_stock -= rs.quantity
+                    product.save()
+                    # ************ <> *****************
+
+                ShopCart.objects.filter(user_id=current_user.id).delete()  # Clear & Delete shopcart
+                request.session['cart_items'] = 0
+                # return render(request, 'Order_Completed.html',{'ordercode':ordercode,'category': category})
+                return HttpResponseRedirect(reverse("ordercompleted"))
             else:
-                data.delivery_charge = 0
-            total = total + data.delivery_charge
-            data.paymentmethod = form.cleaned_data['paymethodselection']
-            data.total = total
-            print(total)
-            data.ip = request.META.get('REMOTE_ADDR')
-            ordercode = get_random_string(5).upper()  # random cod
-            data.code = ordercode
-            data.save()
-
-            for rs in shopcart:
-                detail = OrderProduct()
-                detail.order_id = data.id  # Order Id
-                detail.product_id = rs.product_id
-                detail.user_id = current_user.id
-                detail.quantity = rs.quantity
-                detail.price = rs.product.product_discount
-                asf = rs.product.product_discount * rs.quantity
-                detail.amount = asf
-                detail.save()
-                product = Product.objects.get(id=rs.product_id)
-                product.product_stock -= rs.quantity
-                product.save()
-                # ************ <> *****************
-
-            ShopCart.objects.filter(user_id=current_user.id).delete()  # Clear & Delete shopcart
-            request.session['cart_items'] = 0
-            messages.success(request, "Your Order has been completed. Thank you ")
-            # return render(request, 'Order_Completed.html',{'ordercode':ordercode,'category': category})
-            return HttpResponseRedirect(reverse("ordercompleted"))
-        else:
-            messages.warning(request, form.errors)
-            print(form.errors)
-            return HttpResponseRedirect(reverse("/cart/orderproduct"))
-
+                print(form.errors)
+                if str(form.errors).find('<li>paymethodselection<ul class="errorlist"><li>This field is required.</li></ul></li>')>0:
+                    messages.warning(request, 'There are no payment details added. Please add a payment method.')
+                    print('hhhhhhhhhhhhhhhhhhhhhhlllllllllllllllllllllllllllll')
+                    print(form.errors)
+                    return HttpResponseRedirect(reverse("orderproduct"))
+                return HttpResponseRedirect(reverse("orderproduct"))
+        elif request.POST.get("form_type") == 'formTwo':
+            cform = addcreditcard(request.POST)
+            print(cform)
+            if cform.is_valid():
+                ok = cform.save(False)
+                ok.user_id = current_user.id
+                ok.save()
+                return HttpResponseRedirect(reverse("orderproduct"))
+            else:
+                print(cform.errors)
+                return HttpResponseRedirect(reverse("/cart/orderproduct"))
+        elif request.POST.get("form_type") == 'formThree':
+            dform = adddebitcard(request.POST)
+            print(dform)
+            if dform.is_valid():
+                ok = dform.save(False)
+                ok.user_id = current_user.id
+                ok.save()
+                return HttpResponseRedirect(reverse("orderproduct"))
+            else:
+                print(dform.errors)
+                return HttpResponseRedirect(reverse("/cart/orderproduct"))
+        elif request.POST.get("form_type") == 'formFour':
+            upform = addupiid(request.POST)
+            print(upform)
+            if upform.is_valid():
+                ok = upform.save(False)
+                ok.user_id = current_user.id
+                ok.save()
+                return HttpResponseRedirect(reverse("orderproduct"))
+            else:
+                print(upform.errors)
+                return HttpResponseRedirect(reverse("/cart/orderproduct"))
+        elif request.POST.get("form_type") == 'formFive':
+            payform = addpaytmno(request.POST)
+            print(payform)
+            if payform.is_valid():
+                ok = payform.save(False)
+                ok.user_id = current_user.id
+                ok.save()
+                return HttpResponseRedirect(reverse("orderproduct"))
+            else:
+                print(payform.errors)
+                return HttpResponseRedirect(reverse("/cart/orderproduct"))
     if count3 < 1 and count1 > 0 and count2 > 0:
         return HttpResponseRedirect("/shopcart/")
-    elif count1 > 0 and count2 > 0 and (count7 > 0 or count6 > 0 or count5 > 0 or count4 > 0):
+    elif count1 > 0 and count2 > 0:
         tform.fields['addoptionselection'].queryset = User1Profile.objects.filter(user_id=current_user.id)
         tform.fields['phoneoptionselection'].queryset = User2Profile.objects.filter(user_id=current_user.id)
         # tform.fields['addoptionselection'].to_field_name = "id"
@@ -247,6 +277,10 @@ def orderproduct(request):
         print(tform.fields['paymethodselection'].choices)
         profile1 = User1Profile.objects.filter(user_id=current_user.id)
         profile2 = User2Profile.objects.filter(user_id=current_user.id)
+        ccform = addcreditcard()
+        ddform = adddebitcard()
+        upiform = addupiid()
+        paytmform = addpaytmno()
         context = {'shopcart': shopcart,
                    'category': category,
                    'total': total,
@@ -254,6 +288,10 @@ def orderproduct(request):
                    'profile1': profile1,
                    'profile2': profile2,
                    'count3': count3,
+                   'ccform': ccform,
+                   'ddform': ddform,
+                   'upiform': upiform,
+                   'paytmform': paytmform,
                    }
         return render(request, 'Order_Form.html', context)
     else:
@@ -267,3 +305,4 @@ def orderproduct(request):
 def ordercompleted(request):
     category = Category.objects.all()
     return render(request, 'Order_Completed.html', {'category': category})
+

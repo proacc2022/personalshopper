@@ -5,6 +5,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.contrib.auth.forms import PasswordResetForm
@@ -46,7 +47,8 @@ def login_form(request):
             return HttpResponseRedirect('/')
         else:
             # Return an 'invalid login' error message.
-            messages.warning(request, "Login Error! Username or Password is incorrect")
+            messages.warning(request, 'Please input the correct login details.')
+            print('hhhhhhhhhhhhhhhhhhhhhhlllllllllllllllllllllllllllll')
             return HttpResponseRedirect('/login')
 
     category = Category.objects.all()
@@ -79,12 +81,8 @@ def newsignup(request):
             ok1.save()
             ok2.user_id = current_user.id
             ok2.save()
-            messages.success(request, 'Your account has been created!')
             return HttpResponseRedirect('/')
         else:
-            messages.warning(request, form.errors)
-            messages.warning(request, form1.errors)
-            messages.warning(request, form2.errors)
             return HttpResponseRedirect('/signup')
 
     form = SignUp1Form()
@@ -105,7 +103,6 @@ def user_update(request):
         user_form = UserUpdateForm(request.POST, instance=request.user)  # request.user is user  data
         if user_form.is_valid():
             user_form.save()
-            messages.success(request, 'Your account has been updated!')
             return HttpResponseRedirect('/user')
     else:
         category = Category.objects.all()
@@ -130,7 +127,6 @@ def user_addressupdate(request):
         if formset.is_valid():
             formset.save()
             print("3")
-            messages.success(request, 'Your account has been updated!')
             return redirect('index')
     print("2")
     category = Category.objects.all()
@@ -173,10 +169,8 @@ def user_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your password was successfully updated!')
             return HttpResponseRedirect('/user')
         else:
-            messages.error(request, 'Please correct the error below.<br>' + str(form.errors))
             return HttpResponseRedirect('/user/password')
     else:
         # category = Category.objects.all()
@@ -189,7 +183,18 @@ def user_password(request):
 def user_orders(request):
     category = Category.objects.all()
     current_user = request.user
-    orders = Order.objects.filter(user_id=current_user.id)
+    all_orders = Order.objects.filter(user_id=current_user.id)
+    if all_orders.count() > 0:
+        page = request.GET.get('page', 1)
+        paginator = Paginator(all_orders, 2)
+        try:
+            orders = paginator.page(page)
+        except PageNotAnInteger:
+            orders = paginator.page(1)
+        except EmptyPage:
+            orders = paginator.page(paginator.num_pages)
+    else:
+        orders = Order.objects.filter(user_id=current_user.id)
     context = {'category': category,
                'orders': orders,
                }
@@ -214,7 +219,18 @@ def user_orderdetail(request, id):
 def user_order_product(request):
     category = Category.objects.all()
     current_user = request.user
-    order_product = OrderProduct.objects.filter(user_id=current_user.id).order_by('-id')
+    all_order_product = OrderProduct.objects.filter(user_id=current_user.id).order_by('-id')
+    if all_order_product.count() > 0:
+        page = request.GET.get('page', 1)
+        paginator = Paginator(all_order_product, 2)
+        try:
+            order_product = paginator.page(page)
+        except PageNotAnInteger:
+            order_product = paginator.page(1)
+        except EmptyPage:
+            order_product = paginator.page(paginator.num_pages)
+    else:
+        order_product = OrderProduct.objects.filter(user_id=current_user.id).order_by('-id')
     profile1 = User1Profile.objects.filter(user_id=current_user.id)
     profile2 = User2Profile.objects.filter(user_id=current_user.id)
     context = {'category': category,
@@ -276,7 +292,6 @@ def ccuser_managepayment(request):
         if formset.is_valid():
             formset.save()
             print("3")
-            messages.success(request, 'Your account has been updated!')
             return redirect('index')
     print("2")
     category = Category.objects.all()
@@ -284,6 +299,16 @@ def ccuser_managepayment(request):
     for form in formset:
         for fields in form:
             fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
+            if str(fields.label) == 'Ccardnumber' :
+                fields.label = 'Card Number'
+            if str(fields.label) == 'Cexpmonth' :
+                fields.label = 'Expiry Month'
+            if str(fields.label) == 'Cexpyear' :
+                fields.label = 'Expiry Year'
+            if str(fields.label) == 'Cnameoncard' :
+                fields.label = 'Name on Card'
+            if str(fields.label) == 'Ccvv' :
+                fields.label = 'CVV'
     context = {
         'category': category,
         'formset': formset
@@ -297,14 +322,13 @@ def dcuser_managepayment(request):
     pare = User.objects.get(pk=ty)
     chilFormset = inlineformset_factory(User, User4Profile,
                                         fields=('dcardnumber', 'dexpmonth', 'dexpyear', 'dnameoncard', 'dcvv',),
-                                        extra=1, )
+                                        extra=1,)
     if request.method == 'POST':
         print("1")
         formset = chilFormset(request.POST, instance=pare)
         if formset.is_valid():
             formset.save()
             print("3")
-            messages.success(request, 'Your account has been updated!')
             return redirect('index')
     print("2")
     category = Category.objects.all()
@@ -312,6 +336,17 @@ def dcuser_managepayment(request):
     for form in formset:
         for fields in form:
             fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
+            if str(fields.label) == 'Dcardnumber' :
+                fields.label = 'Card Number'
+            if str(fields.label) == 'Dexpmonth' :
+                fields.label = 'Expiry Month'
+            if str(fields.label) == 'Dexpyear' :
+                fields.label = 'Expiry Year'
+            if str(fields.label) == 'Dnameoncard' :
+                fields.label = 'Name on Card'
+            if str(fields.label) == 'Dcvv' :
+                fields.label = 'CVV'
+    print(formset)
     context = {
         'category': category,
         'formset': formset
@@ -332,6 +367,11 @@ def user_upimanagepayment(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    for form in formset:
+        for fields in form:
+            fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
+            if str(fields.label) == 'Upiid' :
+                fields.label = 'UPI ID'
     context = {
         'category': category,
         'formset': formset
@@ -352,6 +392,11 @@ def user_paytmmanagepayment(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    for form in formset:
+        for fields in form:
+            fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
+            if str(fields.label) == 'Paytmnumber' :
+                fields.label = 'Paytm Number'
     context = {
         'category': category,
         'formset': formset
