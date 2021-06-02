@@ -1,4 +1,4 @@
-{% extends 'homeBase2.html' %}
+{% extends 'homeBase5.html' %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 {% load static %}
@@ -39,7 +39,7 @@
                             <h3 class="title">Debit Card Update</h3>
                         </div>
                     </div>
-                    <form method="POST">
+                    <form method="POST" id="validform" >
                         {% csrf_token %}
                         {{ formset.management_form }}
                         {{ formset.non_form_errors }}
@@ -97,4 +97,4 @@
     <!-- /section -->
 
 {% endblock %}
-{% block footer %} {%  include 'footer.html'  %} {% endblock %}
+{% block footer %} {%  include 'footer4.html'  %} {% endblock %}

@@ -6,7 +6,7 @@
 			<div id="responsive-nav">
 				<!-- category nav -->
 				<div class="category-nav show-on-click ">
-					<span class="category-header"">Categories <i class="fas fa-list-ul"></i></span>
+					<span class="category-header">Categories <i class="fas fa-list-ul"></i></span>
 
 					<ul class="category-list">
 						{% recursetree category %}
@@ -20,7 +20,7 @@
 											<div style="float:right;"><i class="fas fa-angle-right"></i></div>
 										</a>
 								{% else %}
-									<li class="dropdown side-dropdown">
+									<li class="dropdown">
 										<a href="{% url 'category_products' node.id node.slug %}" >{{ node.category_name }}</a>
 								{% endif %}
 
@@ -35,7 +35,7 @@
 										</a>
 								{% else %}
 
-					  				<li class="dropdown-submenu">
+					  				<li class="dropdown-submenu dropdown-divider">
 										<a href="{% url 'category_products' node.id node.slug %}">{{ node.category_name }}</a>
 								{% endif %}
 

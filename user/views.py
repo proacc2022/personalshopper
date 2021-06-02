@@ -119,7 +119,7 @@ def user_addressupdate(request):
     current_user = request.user  # Access User Session information
     ty = current_user.id
     pare = User.objects.get(pk=ty)
-    chilFormset = inlineformset_factory(User, User1Profile, fields=('address', 'city', 'state', 'pin_code', 'country',),
+    chilFormset = inlineformset_factory(User, User1Profile, AddressForm,
                                         extra=1, )
     if request.method == 'POST':
         print("1")
@@ -131,9 +131,17 @@ def user_addressupdate(request):
     print("2")
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    ii=0
     for form in formset:
-        for fields in form:
-            fields.field.widget.attrs['style'] = 'width:700px; height:25px;'
+        ii=ii+1
+    print(ii)
+    jj=0
+    for form in formset:
+        if jj<ii-1:
+            for fields in form:
+                if str(fields.label) != 'Delete':
+                    fields.field.widget.attrs['required'] = 'true'
+            jj=jj+1
     context = {
         'category': category,
         'formset': formset
@@ -147,7 +155,7 @@ def user_contactupdate(request):
     ty = current_user.id
     print(ty)
     pare = User.objects.get(pk=ty)
-    chilFormset = inlineformset_factory(User, User2Profile, fields=('phone',), extra=1, )
+    chilFormset = inlineformset_factory(User, User2Profile, PhoneForm, extra=1, )
     if request.method == 'POST':
         formset = chilFormset(request.POST, instance=pare)
         if formset.is_valid():
@@ -155,6 +163,17 @@ def user_contactupdate(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    ii=0
+    for form in formset:
+        ii=ii+1
+    print(ii)
+    jj=0
+    for form in formset:
+        if jj<ii-1:
+            for fields in form:
+                if str(fields.label) != 'Delete':
+                    fields.field.widget.attrs['required'] = 'true'
+            jj=jj+1
     context = {
         'category': category,
         'formset': formset
@@ -260,7 +279,7 @@ def password_reset_request(request):
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                         "user": user,
                         'token': default_token_generator.make_token(user),
-                        'protocol': 'http',
+                        'protocol': 'https',
                     }
                     email = render_to_string(email_template_name, c)
                     try:
@@ -284,7 +303,7 @@ def ccuser_managepayment(request):
     ty = current_user.id
     pare = User.objects.get(pk=ty)
     chilFormset = inlineformset_factory(User, User3Profile,
-                                        fields=('ccardnumber', 'cexpmonth', 'cexpyear', 'cnameoncard', 'ccvv',),
+                                        form=AddCreditCard,
                                         extra=1, )
     if request.method == 'POST':
         print("1")
@@ -296,19 +315,17 @@ def ccuser_managepayment(request):
     print("2")
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    ii=0
     for form in formset:
-        for fields in form:
-            fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
-            if str(fields.label) == 'Ccardnumber' :
-                fields.label = 'Card Number'
-            if str(fields.label) == 'Cexpmonth' :
-                fields.label = 'Expiry Month'
-            if str(fields.label) == 'Cexpyear' :
-                fields.label = 'Expiry Year'
-            if str(fields.label) == 'Cnameoncard' :
-                fields.label = 'Name on Card'
-            if str(fields.label) == 'Ccvv' :
-                fields.label = 'CVV'
+        ii=ii+1
+    print(ii)
+    jj=0
+    for form in formset:
+        if jj<ii-1:
+            for fields in form:
+                if str(fields.label) != 'Delete':
+                    fields.field.widget.attrs['required'] = 'true'
+            jj=jj+1
     context = {
         'category': category,
         'formset': formset
@@ -321,7 +338,7 @@ def dcuser_managepayment(request):
     ty = current_user.id
     pare = User.objects.get(pk=ty)
     chilFormset = inlineformset_factory(User, User4Profile,
-                                        fields=('dcardnumber', 'dexpmonth', 'dexpyear', 'dnameoncard', 'dcvv',),
+                                        form=AddDebitCard,
                                         extra=1,)
     if request.method == 'POST':
         print("1")
@@ -330,23 +347,19 @@ def dcuser_managepayment(request):
             formset.save()
             print("3")
             return redirect('index')
-    print("2")
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    ii=0
     for form in formset:
-        for fields in form:
-            fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
-            if str(fields.label) == 'Dcardnumber' :
-                fields.label = 'Card Number'
-            if str(fields.label) == 'Dexpmonth' :
-                fields.label = 'Expiry Month'
-            if str(fields.label) == 'Dexpyear' :
-                fields.label = 'Expiry Year'
-            if str(fields.label) == 'Dnameoncard' :
-                fields.label = 'Name on Card'
-            if str(fields.label) == 'Dcvv' :
-                fields.label = 'CVV'
-    print(formset)
+        ii=ii+1
+    print(ii)
+    jj=0
+    for form in formset:
+        if jj<ii-1:
+            for fields in form:
+                if str(fields.label) != 'Delete':
+                    fields.field.widget.attrs['required'] = 'true'
+            jj=jj+1
     context = {
         'category': category,
         'formset': formset
@@ -359,7 +372,7 @@ def user_upimanagepayment(request):
     ty = current_user.id
     print(ty)
     pare = User.objects.get(pk=ty)
-    chilFormset = inlineformset_factory(User, User5Profile, fields=('upiid',), extra=1, )
+    chilFormset = inlineformset_factory(User, User5Profile, AddUpiid, extra=1, )
     if request.method == 'POST':
         formset = chilFormset(request.POST, instance=pare)
         if formset.is_valid():
@@ -367,11 +380,17 @@ def user_upimanagepayment(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    ii=0
     for form in formset:
-        for fields in form:
-            fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
-            if str(fields.label) == 'Upiid' :
-                fields.label = 'UPI ID'
+        ii=ii+1
+    print(ii)
+    jj=0
+    for form in formset:
+        if jj<ii-1:
+            for fields in form:
+                if str(fields.label) != 'Delete':
+                    fields.field.widget.attrs['required'] = 'true'
+            jj=jj+1
     context = {
         'category': category,
         'formset': formset
@@ -384,7 +403,7 @@ def user_paytmmanagepayment(request):
     ty = current_user.id
     print(ty)
     pare = User.objects.get(pk=ty)
-    chilFormset = inlineformset_factory(User, User6Profile, fields=('paytmnumber',), extra=1, )
+    chilFormset = inlineformset_factory(User, User6Profile, AddPaytmno, extra=1, )
     if request.method == 'POST':
         formset = chilFormset(request.POST, instance=pare)
         if formset.is_valid():
@@ -392,11 +411,17 @@ def user_paytmmanagepayment(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
+    ii=0
     for form in formset:
-        for fields in form:
-            fields.field.widget.attrs['style'] = 'width:400px; height:25px;'
-            if str(fields.label) == 'Paytmnumber' :
-                fields.label = 'Paytm Number'
+        ii=ii+1
+    print(ii)
+    jj=0
+    for form in formset:
+        if jj<ii-1:
+            for fields in form:
+                if str(fields.label) != 'Delete':
+                    fields.field.widget.attrs['required'] = 'true'
+            jj=jj+1
     context = {
         'category': category,
         'formset': formset

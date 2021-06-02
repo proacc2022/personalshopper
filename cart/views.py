@@ -92,7 +92,7 @@ def deletefromcart(request, id):
 @login_required(login_url='/login')  # Check login
 def addproduct(request, id):
     current_user = request.user  # Access User Session information
-    #product = Product.objects.get(pk=id)
+    # product = Product.objects.get(pk=id)
     data = ShopCart.objects.get(product_id=id, user_id=current_user.id)
     data.quantity += 1
     data.save()  #
@@ -103,7 +103,7 @@ def addproduct(request, id):
 @login_required(login_url='/login')  # Check login
 def reduceproduct(request, id1, id2):
     current_user = request.user  # Access User Session information
-    #product = Product.objects.get(pk=id1)
+    # product = Product.objects.get(pk=id1)
     data = ShopCart.objects.get(product_id=id1, user_id=current_user.id)
     data.quantity -= 1
     data.save()
@@ -215,7 +215,8 @@ def orderproduct(request):
                 return HttpResponseRedirect(reverse("ordercompleted"))
             else:
                 print(form.errors)
-                if str(form.errors).find('<li>paymethodselection<ul class="errorlist"><li>This field is required.</li></ul></li>')>0:
+                if str(form.errors).find(
+                        '<li>paymethodselection<ul class="errorlist"><li>This field is required.</li></ul></li>') > 0:
                     messages.warning(request, 'There are no payment details added. Please add a payment method.')
                     print('hhhhhhhhhhhhhhhhhhhhhhlllllllllllllllllllllllllllll')
                     print(form.errors)
@@ -306,3 +307,11 @@ def ordercompleted(request):
     category = Category.objects.all()
     return render(request, 'Order_Completed.html', {'category': category})
 
+
+def ok404(request, exception=None):
+    category = Category.objects.all()
+    return render(request, '404.html', {'category': category})
+
+def ok500(request, exception=None):
+    category = Category.objects.all()
+    return render(request, '500.html', {'category': category})

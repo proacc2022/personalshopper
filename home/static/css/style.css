@@ -67,8 +67,8 @@ Table OF Contents
 .dropdown-menu {
 	width: 260px !important;
 	float: right;
-	top: 0;
-	left: 100%;
+	/* top: 0; */
+	left: 0;
 	border-left: 4px solid #0d0fc1;
 	-webkit-box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.175);
 	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.175);
@@ -80,7 +80,9 @@ Table OF Contents
 }
 .dropdown-submenu:hover > .dropdown-menu {
 	display: block;
+	width: inherit;
 }
+
 .dropdown-submenu > a:after {
 	display: block;
 	content: " ";
@@ -584,8 +586,13 @@ header {
 	line-height: 20px;
 }
 
+.expanded-cat-list {
+	width: 50% !important;
+}
+
 .category-nav .category-list {
-	overflow: auto;
+	overflow-y: scroll;
+	overflow-x: hidden;
 	height: 450px;
 	position: absolute;
 	width: 18%;

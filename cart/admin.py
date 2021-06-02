@@ -30,5 +30,6 @@ class OrderProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order, OrderAdmin)
-admin.site.register(OrderProduct, OrderProductAdmin)
-admin.site.register(ShopCart, ShopCartAdmin)
+# admin.site.register(OrderProduct, OrderProductAdmin)
+# admin.site.register(ShopCart, ShopCartAdmin)
+# admin.site.unregister(ShopCart)

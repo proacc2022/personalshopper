@@ -308,19 +308,3 @@ fields: {
 	}
 });
 </script>
-
-<script>
-	    function hideButton()
-    {
-      document.getElementById('stnfilter').style.display = 'none';
-      document.getElementById('postfilter').style.display = 'none';
-      document.getElementById('dor1filter').style.display = 'none';
-      document.getElementById('dor2filter').style.display = 'none';
-      var w = document.getElementsByTagName('input');
-      for(var i = 0; i < w.length; i++){
-        if(w[i].type=='radio'){
-          w[i].checked = false;
-        }
-      }
-    }
-</script>

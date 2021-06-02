@@ -58,7 +58,8 @@ urlpatterns = [
     path('search/', views.search, name='search'),
 
 ]
-
+handler404 = 'cart.views.ok404'
+handler500 = 'cart.views.ok500'
 # from django.views.static import serve as mediaserve
 # from django.urls import re_path
 #

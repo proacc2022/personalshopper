@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'mptt',
     'widget_tweaks',
     'crispy_forms',
-    'chatterbot.ext.django_chatterbot',
 ]
 
 CLOUDINARY_STORAGE = {
