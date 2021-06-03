@@ -1,5 +1,5 @@
 {% extends 'homeBase2.html' %}
-
+{% load static %}
 {% block title %}  {{ user.first_name }} Profile  Update{% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
@@ -18,7 +18,15 @@
         </div>
     </div>
     <!-- /BREADCRUMB -->
-
+	                {% if messages %}
+                    {% for message in messages %}
+                        {% if forloop.last %}
+                        <div class="alert alert-{{message.tags}}" role="alert" style="margin-left:40%;margin-right:40%;background:#AFE0F9;color:black;">
+                            {{ message |safe }}
+                        </div>
+                        {%endif%}
+                    {% endfor %}
+                {% endif %}
     <!-- section -->
     <div class="section">
         <!-- container -->
@@ -45,18 +53,16 @@
                             <p>
                                 {{ field.label_tag }}<br>
                                 {{ field }}
-                                {% if field.help_text %}
-                                    <small style="color: grey">{{ field.help_text }}</small>
-                                {% endif %}
+
                                 {% for error in field.errors %}
                                     <p style="color: red">{{ error }}</p>
                                 {% endfor %}
-                            </p>
+                            </p><br>
                             {% endif %}
                         {% endfor %}
                         </fieldset>
                         <div class="form-group">
-                            <button class="primary-btn" type="submit">Update</button>
+                            <button class="primary-btn" type="submit" id="subbt">Update</button>
                         </div>
                     </form>
 
@@ -67,6 +73,32 @@
         <!-- /container -->
     </div>
     <!-- /section -->
+	<script src="{% static '' %}js/jquery.min.js"></script>
+	<script src="{% static '' %}js/bootstrap.min.js"></script>
+	<script src="{% static '' %}js/slick.min.js"></script>
+	<script src="{% static '' %}js/nouislider.min.js"></script>
+	<script src="{% static '' %}js/jquery.zoom.min.js"></script>
+	<script src="{% static '' %}js/main.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 
+<script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js" ></script>
+<script>
+bootstrapValidate('#id_username', 'min:3: Please Enter your Username with minimum 3 letters length')
+bootstrapValidate('#id_username', 'regex:^[a-z0-9_]+$: The Username can only consist of small alphabets, number and underscore')
+bootstrapValidate('#id_email', 'email: Please enter valid Email address.')
+function yesnoCheck(){
+bootstrapValidate('#id_username', 'min:3: Please Enter your Username with minimum 3 letters length')
+bootstrapValidate('#id_username', 'regex:^[a-z0-9_]+$: The Username can only consist of small alphabets, number and underscore')
+bootstrapValidate('#id_email', 'email: Please enter valid Email address.')
+var element =  document.getElementsByClassName('is-invalid');
+if(element.length>0){
+document.getElementById("subbt").disabled = true;
+} else {
+document.getElementById("subbt").disabled = false;
+}
+}
+
+</script>
 {% endblock %}
-{% block footer %} {%  include 'footer.html'  %} {% endblock %}
+{% block footer %} {%  include 'footer5.html'  %} {% endblock %}

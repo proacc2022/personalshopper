@@ -29,9 +29,18 @@
 								</div>
 								
 								<div id='newline' class="product-body body-product-body">
+									{% if product.product_price != product.product_discount %}
 									<h3 class="product-price body-product-price">₹ {{product.product_discount}} <del class="product-old-price">₹ {{product.product_price}}</del></h3>
+									{% else %}
+									<h3 class="product-price body-product-price">₹ {{product.product_discount}}</h3>
+									{% endif %}
+
 									
+									{% if product.product_name|length <= 30 %}
 									<h2 class="product-name body-product-name"><a href="/product/{{product.id}}/{{product.slug}}">{{product.product_name}}</a></h2>
+									{% else %}
+									<h2 class="product-name body-product-name"><a href="/product/{{product.id}}/{{product.slug}}">{{product.product_name|truncatechars:30}}</a></h2>
+									{% endif %}
 									{% if product.product_stock >= 1  %}
 										{% csrf_token %}
 											<a href="{% url "addtoshopcart" product.id  %}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
@@ -71,9 +80,20 @@
 								</div>
 								
 								<div id='newline' class="product-body body-product-body">
+
+									{% if product.product_price != product.product_discount %}
 									<h3 class="product-price body-product-price">₹ {{product.product_discount}} <del class="product-old-price">₹ {{product.product_price}}</del></h3>
+									{% else %}
+									<h3 class="product-price body-product-price">₹ {{product.product_price}}</h3>
+									{% endif %}
+
 									
+									{% if product.product_name|length <= 30 %}
 									<h2 class="product-name body-product-name"><a href="/product/{{product.id}}/{{product.slug}}">{{product.product_name}}</a></h2>
+									{% else %}
+									<h2 class="product-name body-product-name"><a href="/product/{{product.id}}/{{product.slug}}">{{product.product_name|truncatechars:30}}</a></h2>
+									{% endif %}
+									
 									{% if product.product_stock >= 1  %}
 										{% csrf_token %}
 											<a href="{% url "addtoshopcart" product.id  %}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>

@@ -1,4 +1,5 @@
 {% extends 'homeBase2.html' %}
+{% load static %}
 
 {% block title %}  {{ user.first_name }} Profile  Update{% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
@@ -72,7 +73,7 @@
                                     {% if not "Id:" in field.label_tag %}
                                         {% if not forloop.last %}
                                             {{ field.errors }}
-                                            <div style="width:80%; margin-left:20%">
+                                            <div style="width:80%; margin-left:20%"><br>
                                                 <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
                                                 <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
                                             </div>
@@ -84,7 +85,7 @@
                             {% endif %}
                         {% endfor %}
                         </div><br><br>
-                        <div><button class="primary-btn" type="submit" style="margin-left:40%;" >Save the Changes</button></div>
+                        <div><button class="primary-btn" type="submit" style="margin-left:40%;" id="subbt">Save the Changes</button></div>
                     </form>
 
                 </div>
@@ -94,6 +95,82 @@
         <!-- /container -->
     </div>
     <!-- /section -->
+	<script src="{% static '' %}js/jquery.min.js"></script>
+	<script src="{% static '' %}js/bootstrap.min.js"></script>
+	<script src="{% static '' %}js/slick.min.js"></script>
+	<script src="{% static '' %}js/nouislider.min.js"></script>
+	<script src="{% static '' %}js/jquery.zoom.min.js"></script>
+	<script src="{% static '' %}js/main.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 
+<script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js" ></script>
+<script>
+$f2=0
+{% for form in formset %}
+$f1='#id_user5profile_set-'
+$f3='-upiid'
+$f=$f1.concat($f2.toString())
+$ff=$f.concat($f3)
+bootstrapValidate($ff, 'min:5:Enter valid id.')
+bootstrapValidate($ff, 'max:100:More than 100 charachters.')
+bootstrapValidate($ff, 'regex:^[a-z0-9_@.]+$:Invalid literals added.')
+bootstrapValidate($ff, 'contains:@:@ necessary in upi id.')
+bootstrapValidate($ff, 'regex:[a-z]$:Should end with alphabet')
+$f2=$f2+1
+{%endfor%}
+function yesnoCheck2(){
+$f2=0
+{% for form in formset %}
+$f1='#id_user5profile_set-'
+$f3='-upiid'
+$f=$f1.concat($f2.toString())
+$ff=$f.concat($f3)
+bootstrapValidate($ff, 'min:5:Enter valid id.')
+bootstrapValidate($ff, 'max:100:More than 100 charachters.')
+bootstrapValidate($ff, 'regex:^[a-z0-9_@.]+$:Invalid literals added.')
+bootstrapValidate($ff, 'contains:@:@ necessary in upi id.')
+bootstrapValidate($ff, 'regex:[a-z]$:Should end with alphabet')
+$f2=$f2+1
+{%endfor%}
+var te =  document.getElementsByClassName('form-control');
+for(var j = 0; j < te.length; j++)
+{
+    console.log(te[j].classList)
+    console.log(te[j].classList.contains('is-invalid'))
+    console.log(te[j].id)
+    if (!te[j].classList.contains('is-invalid')){
+        console.log($(te[j]))
+        console.log($(te[j]).next())
+        $(te[j]).next().remove()
+    }
+}
+var element =  document.getElementsByClassName('is-invalid');
+  for(var i = 0; i < element.length; i++){
+	if (i==element.length-1)
+	{
+		var idval='#'.concat((element[i].id).toString())
+		if (idval==$ff)
+		{
+			if (((element[i].value).toString()) == '')
+			{
+				element[i].classList.remove("is-invalid");
+				var elements =  document.getElementsByClassName('invalid-feedback');
+				console.log(elements.length)
+				elements[elements.length-1].remove();
+				elements[elements.length-1].remove();
+				elements[elements.length-1].remove();
+			}
+		}
+	}
+  }
+if(element.length>0){
+document.getElementById("subbt").disabled = true;
+} else {
+document.getElementById("subbt").disabled = false;
+}
+}
+
+</script>
 {% endblock %}
-{% block footer %} {%  include 'footer.html'  %} {% endblock %}
+{% block footer %} {%  include 'footer5.html'  %} {% endblock %}

@@ -10,16 +10,15 @@
 
 	<!-- BREADCRUMB -->
 	
-	{% comment %} <div id="breadcrumb">
-		<div class="container">
-		
-			<ul class="breadcrumb breadcrumb-2">
-				<li><a href="/">Home</a></li>
-				<li class="active">User Sign Up</li>
-			</ul>
-		</div>
-	</div> {% endcomment %}
-
+        	                {% if messages %}
+                    {% for message in messages %}
+                        {% if forloop.last %}
+                        <div class="alert alert-{{message.tags}}" role="alert" style="margin-left:40%;margin-right:40%;background:#AFE0F9;color:black;">
+                            {{ message |safe }}
+                        </div>
+                        {%endif%}
+                    {% endfor %}
+                {% endif %}
 	<!-- /BREADCRUMB -->
 
 	<!-- section -->
@@ -162,9 +161,9 @@ fields: {
 	address: {
 		validators: {
 			stringLength: {
-				min: 15,
+				min: 6,
 				max: 100,
-				message:'Please enter at least 15 characters and no more than 100'
+				message:'Please enter at least 6 characters and no more than 100'
 			},
 			notEmpty: {
 				message: 'Please Enter Address'
@@ -181,7 +180,7 @@ fields: {
 				message: 'Please Enter City'
 			},
             regexp: {
-                regexp: /^[a-zA-Z-]+$/,
+                regexp: /^[a-zA-Z- ]+$/,
                 message: 'Please enter a valid value'
             }
 		}
@@ -211,7 +210,7 @@ fields: {
 				message: 'Please Enter Country'
 			},
             regexp: {
-                regexp: /^[a-zA-Z-]+$/,
+                regexp: /^[a-zA-Z- ]+$/,
                 message: 'Please enter a valid value'
             }
 		}

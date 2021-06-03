@@ -422,7 +422,7 @@ header {
 }
 
 #logo-first-word {
-	color: #0d0fc1;
+	color: #a7a8ff;
 	font-family: "Hind", sans-serif;
 }
 #logo-second-word {
@@ -2013,4 +2013,11 @@ footer {
 	[class*="col-xs"] {
 		width: 100%;
 	}
+}
+
+.invalid-feedback{
+    color:red;
+}
+.is-invalid{
+    border: red 1px solid;
 }

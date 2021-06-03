@@ -48,7 +48,6 @@ def login_form(request):
         else:
             # Return an 'invalid login' error message.
             messages.warning(request, 'Please input the correct login details.')
-            print('hhhhhhhhhhhhhhhhhhhhhhlllllllllllllllllllllllllllll')
             return HttpResponseRedirect('/login')
 
     category = Category.objects.all()
@@ -83,6 +82,12 @@ def newsignup(request):
             ok2.save()
             return HttpResponseRedirect('/')
         else:
+            val=form.errors
+            print(form.errors)
+            if '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(val):
+                messages.warning(request, 'A user with that username already exists. Please try a different username.')
+                print(form.errors)
+                return HttpResponseRedirect('/signup')
             return HttpResponseRedirect('/signup')
 
     form = SignUp1Form()
@@ -104,6 +109,22 @@ def user_update(request):
         if user_form.is_valid():
             user_form.save()
             return HttpResponseRedirect('/user')
+        else:
+            val=user_form.errors
+            print(user_form.errors)
+            if '<li>email<ul class="errorlist"><li>Enter a valid email address.</li></ul></li>' in str(val) and '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(val):
+                messages.warning(request, 'A user with that username already exists. <br> Email is invalid. Correct the email input.')
+                print(user_form.errors)
+                return HttpResponseRedirect('/user/updateprofile/')
+            if '<li>email<ul class="errorlist"><li>Enter a valid email address.</li></ul></li>' in str(val):
+                messages.warning(request, 'Email is invalid. Correct the email input.')
+                print(user_form.errors)
+                return HttpResponseRedirect('/user/updateprofile/')
+            if '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(val):
+                messages.warning(request, 'A user with that username already exists.')
+                print(user_form.errors)
+                return HttpResponseRedirect('/user/updateprofile/')
+            return HttpResponseRedirect('/user/updateprofile/')
     else:
         category = Category.objects.all()
         user_form = UserUpdateForm(instance=request.user)
@@ -128,6 +149,12 @@ def user_addressupdate(request):
             formset.save()
             print("3")
             return redirect('index')
+        else:
+            print(formset.errors)
+            val=formset.errors
+            if "['This field is required.']" in str(val):
+                messages.warning(request, 'Missing Address details.')
+                print(formset.errors)
     print("2")
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
@@ -185,13 +212,46 @@ def user_contactupdate(request):
 def user_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
+        print("tttttttttttttttytytytytyttyttyyyyyyyyyyyyyyyyyy")
         if form.is_valid():
+            print("uuuuuytytytytyttyttyyyyyyyyyyyyyyyyyy")
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             return HttpResponseRedirect('/user')
         else:
-            return HttpResponseRedirect('/user/password')
+            val=form.errors
+            print(form.errors)
+            if '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(val) and '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(val):
+                messages.warning(request, 'Your old password was entered incorrectly. Please enter it again. <br> The two password fields didn’t match. Try Again.')
+                print(form.errors)
+                return HttpResponseRedirect('/user/password/')
+            if '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(val):
+                messages.warning(request, 'Your old password was entered incorrectly. Please enter it again.')
+                print(form.errors)
+                return HttpResponseRedirect('/user/password/')
+            if '<li>The two password fields didn’t match.</li>' in str(val):
+                messages.warning(request, 'The two password fields didn’t match. Try Again.')
+                print(form.errors)
+                return HttpResponseRedirect('/user/password/')
+            if '<li>The password is too similar to the username.</li>' in str(val):
+                messages.warning(request, 'The password is too similar to the username.')
+                print(form.errors)
+                return HttpResponseRedirect('/user/password/')
+            if '<li>This password is too short. It must contain at least 8 characters.</li>' in str(val):
+                messages.warning(request, 'This password is too short. It must contain at least 8 characters.')
+                print(form.errors)
+                return HttpResponseRedirect('/user/password/')
+            if '<li>This password is too common.</li>' in str(val):
+                messages.warning(request, 'This password is too common. Please try another one.')
+                print(form.errors)
+                return HttpResponseRedirect('/user/password/')
+            if '<li>This password is entirely numeric.</li>' in str(val):
+                messages.warning(request, 'This password is entirely numeric. Please try another one.')
+                print(form.errors)
+                return HttpResponseRedirect('/user/password/')
+            return HttpResponseRedirect('/user/password/')
     else:
+        print("sssssssssssssssssssstytytytytyttyttyyyyyyyyyyyyyyyyyy")
         # category = Category.objects.all()
         form = PasswordChangeForm(request.user)
         return render(request, 'user_password.html', {'form': form,  # 'category': category
@@ -312,6 +372,12 @@ def ccuser_managepayment(request):
             formset.save()
             print("3")
             return redirect('index')
+        else:
+            print(formset.errors)
+            val=formset.errors
+            if "['This field is required.']" in str(val):
+                messages.warning(request, 'Invalid credit card details.')
+                print(formset.errors)
     print("2")
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
@@ -347,6 +413,12 @@ def dcuser_managepayment(request):
             formset.save()
             print("3")
             return redirect('index')
+        else:
+            print(formset.errors)
+            val=formset.errors
+            if "['This field is required.']" in str(val):
+                messages.warning(request, 'Invalid debit card details.')
+                print(formset.errors)
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
     ii=0

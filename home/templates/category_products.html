@@ -86,7 +86,14 @@
                                         </div>
                                         <div class="product-body">
                                             <h2 class="product-name"><a href="/product/{{product.id}}/{{product.slug}}">{{product.product_name}}</a></h2>
-                                            <h3 class="product-price">₹ {{product.product_discount}} <del class="product-old-price">₹ {{product.product_price}}</del></h3>
+
+											{% if product.product_price != product.product_discount %}
+											<h3 class="product-price">₹ {{product.product_discount}} <del class="product-old-price">₹ {{product.product_price}}</del></h3>
+											{% else %}
+											<h3 class="product-price">₹ {{product.product_price}} </h3>
+											{% endif %}
+
+                                            
                                             <p><strong> {% if product.product_stock == 0 %}<span class='out-of-stock'>Out of Stock</span>{% else %}In Stock{% endif %}</strong></p>
                                         	{% if product.product_stock >= 1  %}
 												{% csrf_token %}
