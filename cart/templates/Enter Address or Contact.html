@@ -1,14 +1,9 @@
 {% extends 'homeBase.html' %}
-
 {% block title %} Complete User Profile {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
-
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
-
-    <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
@@ -17,14 +12,9 @@
             </ul>
         </div>
     </div>
-    <!-- /BREADCRUMB -->
-    <!-- section -->
     <div class="section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="order-summary clearfix">
                         <h2>Dear  {{ user.first_name }} {{  user.last_name }}</h2>
@@ -32,18 +22,10 @@
                         <h3>Please Update your profile.</h3>
                         <h4>Check if atleast one Address and Contact details are added.</h4>
                         <hr>
-
                     </div>
-
                 </div>
-
-
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /section -->
-
 {% endblock %}
 {% block footer %}{% include 'footer.html' %}{% endblock %}

@@ -1,38 +1,21 @@
 {% extends 'homeBase.html' %}
-
 {% block title %} Does not exist {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
-
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
-
-
-    <!-- section -->
     <div class="section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="order-summary clearfix">
                         <div class="section-title">
                             <h3 class="title">404 Error. This Page does not exist.</h3>
                         </div>
-
                     </div>
-
                 </div>
-
-
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /section -->
-
 {% endblock %}
 {% block footer %}{% include 'footer.html' %}{% endblock %}

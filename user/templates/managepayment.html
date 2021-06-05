@@ -5,12 +5,8 @@
 {% block title %}  {{ user.first_name }} Profile  Update{% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
-
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
-
-    <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
@@ -19,19 +15,12 @@
             </ul>
         </div>
     </div>
-    <!-- /BREADCRUMB -->
-
-    <!-- section -->
     <div class="section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
-
                 <div class="col-md-3">
                     {% include "user_panel.html" %}
                 </div>
-
                 <div class="col-md-9">
                     <div class="billing-details">
                         <div class="section-title">
@@ -42,20 +31,16 @@
                     <div style="width:80%; margin-left:40%; margin-top:6%;">
                         <div style="width:30%; float:left;">
                             <ul class="list-links">
-                                <li><a href="/user/managepayment/creditcards"><strong><h5>Manage Credit Cards</h5></strong></a></li>
-                                <li><a href="/user/managepayment/debitcards"><strong><h5>Manage Debit Cards</h5></strong></a></li>
-                                <li><a href="/user/managepayment/upi"><strong><h5>Manage UPI IDs</h5></strong></a></li>
+                                <li><a href="/user/managepayment/creditcards"><h5><strong>Manage Credit Cards</strong></h5></a></li>
+                                <li><a href="/user/managepayment/debitcards"><h5><strong>Manage Debit Cards</strong></h5></a></li>
+                                <li><a href="/user/managepayment/upi"><h5><strong>Manage UPI IDs</strong></h5></a></li>
                                 <li><a href="/user/managepayment/paytm"><h5><strong>Manage Paytm Numbers</strong></h5></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /section -->
-
 {% endblock %}
 {% block footer %} {%  include 'footer.html'  %} {% endblock %}

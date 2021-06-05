@@ -1,52 +1,30 @@
-	{% load static %}
-	<!-- HEADER -->
-	<header>
-		<!-- header -->
-		<div id="header-3">
-				<div class="pull-left pull-left-3">
-					<!-- Logo -->
-					<div class="header-logo">
-						<a class="logo" href="/">
-							<span id="logo-first-word">Personal</span> <span id="logo-second-word">Shopper</span>
-						</a>
-					</div>
-				</div>
-				<!-- Search -->
-			
-				<div class="pull-right pull-right-3">
-					<ul class="header-btns">
-							<!-- Account -->
-							<li class="header-account dropdown default-dropdown">
-								{% if user.id is not None %}
-									<div class="dropdown-toggle ok1" role="button" data-toggle="dropdown" aria-expanded="true">
-										<strong class="text-uppercase">{{ user.first_name }}   <i class="fa fa-caret-down"></i></strong>
-									</div>
-								{% else %}
-									<a class="btn" href="{% url 'login' %}" class="text-uppercase">Login <img src="{% static '' %}img/login.png"></img></a>
-									<a class="btn" href="{% url 'signup' %}" class="text-uppercase">Sign Up <img src="{% static '' %}img/add-user.png"></img></a>
-								{% endif %}
-								<ul class="custom-menu">
-									<li><a href="/user"><i class="fa fa-user"></i> My Account</a></li>
-									<li><a href="{% url 'logout' %}"><i class="fa fa-unlock-alt"></i> Logout</a></li>
-								</ul>
-							</li>
-							<!-- /Account -->
-
-						<!-- Cart -->
-						{% comment %} {% if user.id is not None %}
-						<li class="header-cart dropdown default-dropdown">
-							<a href="{% url 'shopcart'%}" >
-								<div class="header-btns-icon">
-									<i class="fa fa-shopping-cart"></i>
-								</div>
-								<br>
-							</a>
-						</li>
-						{% endif %}	 {% endcomment %}
-					</ul>
-				</div>
-			<!-- header -->
+{% load static %}
+<header>
+	<div id="header-3">
+		<div class="pull-left pull-left-3">
+			<div class="header-logo">
+				<a class="logo" href="/">
+					<span id="logo-first-word">Personal</span> <span id="logo-second-word">Shopper</span>
+				</a>
+			</div>
 		</div>
-		<!-- container -->
-	</header>
-	<!-- /HEADER -->
+		<div class="pull-right pull-right-3">
+			<ul class="header-btns">
+				<li class="header-account dropdown default-dropdown">
+					{% if user.id is not None %}
+						<div class="dropdown-toggle ok1" role="button" data-toggle="dropdown" aria-expanded="true">
+							<strong class="text-uppercase">{{ user.first_name }}   <i class="fa fa-caret-down"></i></strong>
+						</div>
+					{% else %}
+						<a class="btn text-uppercase" href="{% url 'login' %}">Login <img src="{% static '' %}img/login.png" alt='Login' /></a>
+						<a class="btn text-uppercase" href="{% url 'signup' %}">Sign Up <img src="{% static '' %}img/add-user.png" alt='Signup' /></a>
+					{% endif %}
+					<ul class="custom-menu">
+						<li><a href="/user"><i class="fa fa-user"></i> My Account</a></li>
+						<li><a href="{% url 'logout' %}"><i class="fa fa-unlock-alt"></i> Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</header>

@@ -1,14 +1,9 @@
 {% extends 'homeBase2.html' %}
-
 {% block title %} User Login  {{ setting.title }} {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
-
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
-
-	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
@@ -17,53 +12,40 @@
 			</ul>
 		</div>
 	</div>
-	<!-- /BREADCRUMB -->
-	                {% if messages %}
-                    {% for message in messages %}
-                        {% if forloop.last %}
-                        <div class="alert alert-{{message.tags}}" role="alert" style="margin-left:41%;margin-right:41%;;background:#AFE0F9;color:black;">
-                            {{ message |safe }}
-                        </div>
-                        {%endif%}
-                    {% endfor %}
-                {% endif %}
-	<!-- section -->
+	{% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+				<div class="alert alert-{{message.tags}}" role="alert" style="margin-left:41%;margin-right:41%;;background:#AFE0F9;color:black;">
+					{{ message |safe }}
+				</div>
+            {%endif%}
+        {% endfor %}
+    {% endif %}
 	<div class="section">
-		<!-- container -->
 		<div class="container">
-			<!-- row -->
 			<div class="row">
-
                 <div class="col-md-12">
                     <div class="billing-details">
-
                         <div class="section-title">
                             <h3 class="title">Login Form</h3>
                         </div>
-
-                        <form action="" method="post">
+                        <form method="post">
                             {% csrf_token %}
-                           <div class="form-group" style="width:40%">
+                        	<div class="form-group" style="width:40%">
 								<input class="input" type="text" name="username" placeholder="Username">
 							</div>
 							<div class="form-group" style="width:40%">
 								<input class="input" type="password" name="password" placeholder="Password">
-							</div><br>
+							</div>
+							<br>
                             <input type="submit" value="Login" class="primary-btn">
                         </form>
 						<br>
-						<a href="{% url 'password_reset' %}"  type="button" class="primary-btn">Forgot Password</a>
-
+						<a href="{% url 'password_reset' %}" class="primary-btn">Forgot Password</a>
                     </div>
                 </div>
-
-
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
-	<!-- /section -->
-
 {% endblock %}
 {% block footer %} {%  include 'footer.html'  %} {% endblock %}

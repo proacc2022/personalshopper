@@ -1,40 +1,27 @@
 {% extends 'homeBase3.html' %}
-
 {% block title %} User Sign Up  {{ setting.title }} {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
 {% load crispy_forms_tags %}
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
-
-	<!-- BREADCRUMB -->
-	
-        	                {% if messages %}
-                    {% for message in messages %}
-                        {% if forloop.last %}
-                        <div class="alert alert-{{message.tags}}" role="alert" style="margin-left:40%;margin-right:40%;background:#AFE0F9;color:black;">
-                            {{ message |safe }}
-                        </div>
-                        {%endif%}
-                    {% endfor %}
-                {% endif %}
-	<!-- /BREADCRUMB -->
-
-	<!-- section -->
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+				<div class="alert alert-{{message.tags}}" role="alert" style="margin-left:40%;margin-right:40%;background:#AFE0F9;color:black;">
+					{{ message |safe }}
+				</div>
+            {%endif%}
+        {% endfor %}
+    {% endif %}
 	<div class='signup-form'>
-		<!-- container -->
 		<div class="container">
-			<!-- row -->
 			<div class="row">
-
                 <div class="col-md-12">
                     <div class="billing-details">
-
                         <div class="section-title">
                             <h3 class="title">Sign Up Form</h3>
                         </div>
-
                         <form method="post" id="validateForm">
                             {% csrf_token %}
                             {% for field in form %}
@@ -66,188 +53,177 @@
                             {% endfor %}
                             <button type="submit" class="primary-btn">Sign up</button>
                         </form>
-
-
-
                     </div>
                 </div>
-
-
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
-	<!-- /section -->
+	<script  src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+	<script>
+		$('#validateForm').bootstrapValidator({
+			feedbackIcons: {
+				valid: 'glyphicon glyphicon-ok',
+				invalid: 'glyphicon glyphicon-remove',
+				validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				username: {
+					validators: {
+						stringLength: {
+							min: 3,
+							message: 'Please Enter your Username with minimum 3 letters length'
+						},
+						notEmpty: {
+							message: 'Please Enter your Username'
+						},
+						regexp: {
+							regexp: /^[a-z0-9_]+$/,
+							message: 'The Username can only consist of small alphabets, number and underscore'
+						}
+					}
+				},
+				first_name: {
+					validators: {
+						stringLength: {
+							min: 2,
+							message: 'Please Enter your First name with minimum 2 letters length'
+						},
+						notEmpty: {
+							message: 'Please Enter your First name'
+						}
+					}
+				},
+				last_name: {
+					validators: {
+						stringLength: {
+							min: 2,
+							message: 'Please Enter your Last name with minimum 2 letters length'
+						},
+						notEmpty: {
+							message: 'Please Enter your Last name'
+						}
+					}
+				},
+				phone: {
+					validators: {
+						numeric: {
+							message: 'Mobile number must be a number'
+						},
+						notEmpty: {
+							message: 'Please Enter your mobile number'
+						},
+						stringLength: {
+							min: 10,
+							max: 10,
+							message: 'Mobile number should be of 10 digits'
+						}
+					}
+				},
+				pin_code: {
+					validators: {
+						numeric: {
+							message: 'PIN Code must be a number'
+						},
+						notEmpty: {
+							message: 'Please Enter PIN Code'
+						},
+						stringLength: {
+							min: 6,
+							max: 6,
+							message: 'PIN Code should be of 6 digits'
+						}
+					}
+				},
+				address: {
+					validators: {
+						stringLength: {
+							min: 6,
+							max: 100,
+							message:'Please enter at least 6 characters and no more than 100'
+						},
+						notEmpty: {
+							message: 'Please Enter Address'
+						}
+					}
+				},
+				city: {
+					validators: {
+						stringLength: {
+							min: 2,
+							message:'Please enter a valid value'
+						},
+						notEmpty: {
+							message: 'Please Enter City'
+						},
+						regexp: {
+							regexp: /^[a-zA-Z- ]+$/,
+							message: 'Please enter a valid value'
+						}
+					}
+				},
+				state: {
+					validators: {
+						stringLength: {
+							min: 2,
+							message:'Please enter a valid value'
+						},
+						notEmpty: {
+							message: 'Please Enter State'
+						},
+						regexp: {
+							regexp: /^[a-zA-Z- ]+$/,
+							message: 'Please enter a valid value'
+						}
+					}
+				},
+				country: {
+					validators: {
+						stringLength: {
+							min: 2,
+							message:'Please enter a valid value'
+						},
+						notEmpty: {
+							message: 'Please Enter Country'
+						},
+						regexp: {
+							regexp: /^[a-zA-Z- ]+$/,
+							message: 'Please enter a valid value'
+						}
+					}
+				},
 
-		<script  src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
-		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
-<script>
-    $('#validateForm').bootstrapValidator({
-feedbackIcons: {
-	valid: 'glyphicon glyphicon-ok',
-	invalid: 'glyphicon glyphicon-remove',
-	validating: 'glyphicon glyphicon-refresh'
-},
-fields: {
-	username: {
-		validators: {
-			stringLength: {
-				min: 3,
-				message: 'Please Enter your Username with minimum 3 letters length'
-			},
-			notEmpty: {
-				message: 'Please Enter your Username'
-			},
-            regexp: {
-                regexp: /^[a-z0-9_]+$/,
-                message: 'The Username can only consist of small alphabets, number and underscore'
-            }
-		}
-	},
-	first_name: {
-		validators: {
-			stringLength: {
-				min: 2,
-				message: 'Please Enter your First name with minimum 2 letters length'
-			},
-			notEmpty: {
-				message: 'Please Enter your First name'
+				email: {
+					validators: {
+						notEmpty: {
+							message: 'Please Enter your email address'
+						},
+						emailAddress: {
+							message: 'Please Enter a valid email address'
+						}
+					}
+				},
+				password1: {
+					validators: {
+						notEmpty: {
+							message: 'Enter your profile password'
+						}
+					}
+				},
+				password2: {
+					validators: {
+						notEmpty: {
+							message: 'Enter confirm your profile password'
+						},
+						identical: {
+							field: 'password1',
+							message: 'Enter the password, what enter in password field'
+						}
+					}
+				},
 			}
-		}
-	},
-	last_name: {
-		validators: {
-			stringLength: {
-				min: 2,
-				message: 'Please Enter your Last name with minimum 2 letters length'
-			},
-			notEmpty: {
-				message: 'Please Enter your Last name'
-			}
-		}
-	},
-	phone: {
-		validators: {
-			numeric: {
-				message: 'Mobile number must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter your mobile number'
-			},
-			stringLength: {
-				min: 10,
-				max: 10,
-				message: 'Mobile number should be of 10 digits'
-			}
-		}
-	},
-	pin_code: {
-		validators: {
-			numeric: {
-				message: 'PIN Code must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter PIN Code'
-			},
-			stringLength: {
-				min: 6,
-				max: 6,
-				message: 'PIN Code should be of 6 digits'
-			}
-		}
-	},
-	address: {
-		validators: {
-			stringLength: {
-				min: 6,
-				max: 100,
-				message:'Please enter at least 6 characters and no more than 100'
-			},
-			notEmpty: {
-				message: 'Please Enter Address'
-			}
-		}
-	},
-	city: {
-		validators: {
-			stringLength: {
-				min: 2,
-				message:'Please enter a valid value'
-			},
-			notEmpty: {
-				message: 'Please Enter City'
-			},
-            regexp: {
-                regexp: /^[a-zA-Z- ]+$/,
-                message: 'Please enter a valid value'
-            }
-		}
-	},
-	state: {
-		validators: {
-			stringLength: {
-				min: 2,
-				message:'Please enter a valid value'
-			},
-			notEmpty: {
-				message: 'Please Enter State'
-			},
-            regexp: {
-                regexp: /^[a-zA-Z- ]+$/,
-                message: 'Please enter a valid value'
-            }
-		}
-	},
-	country: {
-		validators: {
-			stringLength: {
-				min: 2,
-				message:'Please enter a valid value'
-			},
-			notEmpty: {
-				message: 'Please Enter Country'
-			},
-            regexp: {
-                regexp: /^[a-zA-Z- ]+$/,
-                message: 'Please enter a valid value'
-            }
-		}
-	},
-
-	email: {
-		validators: {
-			notEmpty: {
-				message: 'Please Enter your email address'
-			},
-			emailAddress: {
-				message: 'Please Enter a valid email address'
-			}
-		}
-	},
-	password1: {
-		validators: {
-			notEmpty: {
-				message: 'Enter your profile password'
-			}
-		}
-	},
-	password2: {
-		validators: {
-			notEmpty: {
-				message: 'Enter confirm your profile password'
-			},
-			identical: {
-				field: 'password1',
-				message: 'Enter the password, what enter in password field'
-			}
-		}
-	 },
-
-	}
-});
-
-</script>
+		});
+	</script>
 {% endblock %}
 {% block footer %} {%  include 'footer.html'  %} {% endblock %}

@@ -1,14 +1,9 @@
 {% extends 'homeBase.html' %}
-
 {% block title %} Order Detail {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
-
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
-
-    <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
@@ -17,17 +12,12 @@
             </ul>
         </div>
     </div>
-    <!-- /BREADCRUMB -->
-    <!-- section -->
     <div class="section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
                 <div class="col-md-3">
                     {% include "user_panel.html" %}
                 </div>
-
                 <div class="col-md-9">
                     <div class="order-summary clearfix">
                         <div class="section-title">
@@ -38,14 +28,17 @@
                                 <th class="text-left">Name Surname</th>
                                 <td class="text-left">{{ order.first_name}} {{ order.last_name }} </td>
                             </tr>
+
                             <tr>
                                 <th class="text-left">Phone</th>
                                 <td class="text-left">{{ order.phone}}</td>
                             </tr>
+
                             <tr>
                                 <th class="text-left">Address</th>
                                 <td class="text-left">{{ order.address}} {{ order.city}} {{ order.state}} {{ order.pin_code}} {{ order.Country}}</td>
                             </tr>
+
                             <tr>
                                 <th class="text-left">Status</th>
                                 <td class="text-left">{{ order.status}}</td>
@@ -58,7 +51,7 @@
 
                             <th class="text-left">Shipping Information</th>
                             <td class="text-left">{{ order.adminnote }}</td>
-                            </tr>
+                        </tr>
 
                         </table><br><br><br>
                         <div class="section-title">
@@ -90,17 +83,11 @@
                                     <td class="text-left">{{ rs.create_at}} </td>
                                 </tr>
                             {% endfor %}
-
                         </table>
-
                     </div>
                 </div>
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /section -->
-
 {% endblock %}
 {% block footer %}{% include 'footer.html' %}{% endblock %}

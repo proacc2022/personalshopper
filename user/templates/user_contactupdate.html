@@ -3,12 +3,8 @@
 {% block title %}  {{ user.first_name }} Profile  Update{% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
-
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
-
-    <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
@@ -17,26 +13,18 @@
             </ul>
         </div>
     </div>
-    <!-- /BREADCRUMB -->
-
-    <!-- section -->
     <div class="section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
-
                 <div class="col-md-3">
                     {% include "user_panel.html" %}
                 </div>
-
                 <div class="col-md-9">
                     <div class="billing-details">
                         <div class="section-title">
                             <h3 class="title">User Phone Update</h3>
                         </div>
                     </div>
-
                     <form method="POST">
                         {% csrf_token %}
                         {{ formset.management_form }}
@@ -88,11 +76,8 @@
 
                 </div>
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /section -->
 	<script src="{% static '' %}js/jquery.min.js"></script>
 	<script src="{% static '' %}js/bootstrap.min.js"></script>
 	<script src="{% static '' %}js/slick.min.js"></script>
@@ -101,8 +86,7 @@
 	<script src="{% static '' %}js/main.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
-
-<script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js" ></script>
+    <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js" ></script>
 <script>
 $f2=0
 {% for form in formset %}

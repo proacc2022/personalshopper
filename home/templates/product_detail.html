@@ -1,36 +1,24 @@
 
 {% extends 'homeBase.html' %}
-
-
 {% block title %}{{product.product_name}}{% endblock %}
-
 {% block header %}{% include 'header.html' %}{% endblock %}
 {% block categories %}{% include 'categories.html' %}{% endblock %}
-
-
 {% block body %}
-
-{% load static %}
-<!-- section -->
+	{% load static %}
 	<div class="section">
-		<!-- container -->
 		<div class="container">
-			<!-- row -->
 			<div class="row">
-				<!--  Product Details -->
 				<div class="product product-details clearfix">
 					<div class="col-md-4">
 						<div id="product-main-view">
 							<div class="product-view">
 								<img src="{{product.product_image.url}}" alt="">
 							</div>
-
                             {% for image in images %}
-							<div class="product-view">
-								<img src="{{image.image.url}}" alt="">
-							</div>
+								<div class="product-view">
+									<img src="{{image.image.url}}" alt="">
+								</div>
 							{% endfor %}
-                            
 						</div>
 						<div id="product-view">
 							<div class="product-view">
@@ -38,55 +26,46 @@
 							</div>
 
                             {% for image in images %}
-							<div class="product-view">
-								<img src="{{image.image.url}}" alt="">
-							</div>
+								<div class="product-view">
+									<img src="{{image.image.url}}" alt="">
+								</div>
                             {% endfor %}
-
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
-							
 							<h2 class="product-name">{{product.product_name}}</h2>
+
 							{% if product.product_price != product.product_discount %}
-							<h3 class="product-price">₹ {{product.product_discount}} <del class="product-old-price">₹ {{product.product_price}}</del></h3>
+								<h3 class="product-price">₹ {{product.product_discount}} <del class="product-old-price">₹ {{product.product_price}}</del></h3>
 							{% else %}
-							<h3 class="product-price">₹ {{product.product_price}} </h3>
+								<h3 class="product-price">₹ {{product.product_price}} </h3>
 							{% endif %}
+
 							<p><strong>Availability:</strong> {% if product.product_stock == 0 %}<span class='out-of-stock'>Out of Stock</span>{% else %}{{product.product_stock}}{% endif %}</p>
 							<p><strong>Brand:</strong> {{product.product_brand}}</p>
 							<p>{{product.product_description}}</p>
 
 							{% if product.product_stock >= 1  %}
-							<form action="/cart/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
-								{% csrf_token %}
-								<div id="SelectedProduct">
-									<div class="qty-input">
-										<span class="text-uppercase">QTY: </span>
-										<input class="input" name="quantity" type="number" value="1" min="1" max="{{ product.product_stock }}"/>
-										<button type="submit"  class="primary-btn add-to-cart">
-											<i class="fa fa-shopping-cart"></i> Add to Cart
-										</button>
+								<form action="/cart/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
+									{% csrf_token %}
+									<div id="SelectedProduct">
+										<div class="qty-input">
+											<span class="text-uppercase">QTY: </span>
+											<input class="input" name="quantity" type="number" value="1" min="1" max="{{ product.product_stock }}"/>
+											<button type="submit"  class="primary-btn add-to-cart">
+												<i class="fa fa-shopping-cart"></i> Add to Cart
+											</button>
+										</div>
 									</div>
-								</div>
-							</form>
+								</form>
 							{% endif %}
-
 						</div>
 					</div>
-					
-
 				</div>
-				<!-- /Product Details -->
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
-
-
-    {% endblock  %}
-
+{% endblock  %}
 {% block botButton %}{% include 'botButton.html' %}{% endblock  %}
 {% block footer %}{% include 'footer.html' %}{% endblock %}

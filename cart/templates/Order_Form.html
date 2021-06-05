@@ -2,13 +2,10 @@
 {% block title %} Order Page {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
-
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-
 {% block body %}
 {%load static%}
     <hr>
-    <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
@@ -17,25 +14,23 @@
             </ul>
         </div>
     </div>
-    <!-- /BREADCRUMB -->
-    <!-- section -->
-	                {% if messages %}
-                    {% for message in messages %}
-                        {% if forloop.last %}
-                        <div class="alert alert-{{message.tags}}" role="alert" style="margin-left:35%;margin-right:35%;background:#AFE0F9;color:black;">
-                            {{ message |safe }}
-                        </div>
-                        {%endif%}
-                    {% endfor %}
-                {% endif %}
+
+	{% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+                <div class="alert alert-{{message.tags}}" role="alert" style="margin-left:35%;margin-right:35%;background:#AFE0F9;color:black;">
+                    {{ message |safe }}
+                </div>
+            {%endif%}
+        {% endfor %}
+    {% endif %}
+
     <div class="section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div  class="row">
                 <div class="col-md-6">
                     <form id="thisform" method="post" data-url="%url 'orderproduct'%">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <input type="hidden" name="form_type" value="formOne">
                         <div class="billing-details">
                             <div class="section-title">
@@ -43,18 +38,20 @@
                             </div>
                             <div>
                                 {% for field in form %}
-                                {% if not forloop.last %}
-                                    <div style="width:80%;">
-                                        <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
-                                        <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
-                                    </div><br>
-                                {%else%}
-                                    <br><br>
-                                    <div style="width:80%;">
-                                        <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
-                                        <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
-                                    </div><br>
-                                {% endif %}
+                                    {% if not forloop.last %}
+                                        <div style="width:80%;">
+                                            <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                            <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                        </div>
+                                        <br>
+                                    {%else%}
+                                        <br><br>
+                                        <div style="width:80%;">
+                                            <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                            <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                        </div>
+                                        <br>
+                                    {% endif %}
                                 {%endfor%}
                             </div>
                         </div>
@@ -70,84 +67,82 @@
                         <div>
                             <input type="radio" onclick="javascript:yesnoCheck();" id="stn" name="filter1[]" value="stn">
                             <label for="stn">Add Credit Card</label><br>
-                                                    <div style="margin-top:5%;margin-bottom:5%;margin-left:10%;">
-                        <div id="stnfilter">
-                            <form id="thisform1" method="post" data-url="%url 'orderproduct'%">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_type" value="formTwo">
-                            {% for field in ccform %}
-                                <div style="width:80%;" class="form-group">
-                                    <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
-                                    <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
-                                </div><br>
-                            {%endfor%}
-                                <div>
-                                    <button  type="submit" class="primary-btn">Add Credit Card</button>
+                            <div style="margin-top:5%;margin-bottom:5%;margin-left:10%;">
+                                <div id="stnfilter">
+                                    <form id="thisform1" method="post" data-url="%url 'orderproduct'%">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_type" value="formTwo">
+                                        {% for field in ccform %}
+                                            <div style="width:80%;" class="form-group">
+                                                <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                                <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                            </div><br>
+                                        {%endfor%}
+                                        <div>
+                                            <button  type="submit" class="primary-btn">Add Credit Card</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div></div>
+                            </div>
                             <input type="radio" onclick="javascript:yesnoCheck();" id="post" name="filter1[]" value="post">
                             <label for="post">Add Debit Card</label><br>
                             <div style="margin-top:5%;margin-bottom:5%;margin-left:10%;">
-                                                        <div id="postfilter">
-                            <form id="thisform2" method="post" data-url="%url 'orderproduct'%">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_type" value="formThree">
-                            {% for field in ddform %}
-                                <div style="width:80%;" class="form-group">
-                                    <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
-                                    <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
-                                </div><br>
-                            {%endfor%}
-                                <div>
-                                    <button  type="submit" class="primary-btn">Add Debit Card</button>
+                                <div id="postfilter">
+                                    <form id="thisform2" method="post" data-url="%url 'orderproduct'%">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_type" value="formThree">
+                                        {% for field in ddform %}
+                                            <div style="width:80%;" class="form-group">
+                                                <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                                <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                            </div>
+                                            <br>
+                                        {%endfor%}
+                                        <div>
+                                            <button  type="submit" class="primary-btn">Add Debit Card</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
                             </div>
                             <input type="radio" onclick="javascript:yesnoCheck();" id="dor1" name="filter1[]" value="dor1">
                             <label for="dor1">Add UPI ID</label><br>
                             <div style="margin-top:5%;margin-bottom:5%;margin-left:10%;">
-                                                        <div id="dor1filter">
-                            <form id="thisform3" method="post" data-url="%url 'orderproduct'%">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_type" value="formFour">
-                            {% for field in upiform %}
-                                <div style="width:80%;" class="form-group">
-                                    <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
-                                    <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
-                                </div><br>
-                            {%endfor%}
-                                <div>
-                                    <button  type="submit" class="primary-btn">Add UPI ID</button>
+                                <div id="dor1filter">
+                                    <form id="thisform3" method="post" data-url="%url 'orderproduct'%">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_type" value="formFour">
+                                        {% for field in upiform %}
+                                            <div style="width:80%;" class="form-group">
+                                                <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                                <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                            </div><br>
+                                        {%endfor%}
+                                        <div>
+                                            <button  type="submit" class="primary-btn">Add UPI ID</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
                             </div>
                             <input type="radio" onclick="javascript:yesnoCheck();" id="dor2" name="filter1[]" value="dor2">
                             <label for="dor2">Add Paytm Number</label><br>
                             <div style="margin-top:5%;margin-bottom:5%;margin-left:10%;">
-                                                        <div id="dor2filter">
-                            <form id="thisform4" method="post" data-url="%url 'orderproduct'%">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_type" value="formFive">
-                            {% for field in paytmform %}
-                                <div style="width:80%;" class="form-group">
-                                    <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
-                                    <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
-                                </div><br>
-                            {%endfor%}
-                                <div>
-                                    <button  type="submit" class="primary-btn">Add Paytm Number</button>
+                                <div id="dor2filter">
+                                    <form id="thisform4" method="post" data-url="%url 'orderproduct'%">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_type" value="formFive">
+                                        {% for field in paytmform %}
+                                            <div style="width:80%;" class="form-group">
+                                                <div style="width:30%; float:left;"><p style="display:inline;">{{ field.label_tag }}</p></div>
+                                                <div style="width:35%; float:left;"><p style="display:inline;">{{ field }}</p></div><br><br>
+                                            </div><br>
+                                        {%endfor%}
+                                        <div>
+                                            <button  type="submit" class="primary-btn">Add Paytm Number</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
 
@@ -158,319 +153,42 @@
                         </div>
                         <table class="shopping-cart-table table" id="taskList">
                             <tfoot>
-                            <tr>
-                                <th class="empty" colspan="3"></th>
-                                <th>SUBTOTAL</th>
-                                <th colspan="2" class="sub-total">Rs. {{ total}}</th>
-                            </tr>
-                            <tr>
-                                <th class="empty" colspan="3"></th>
-                                <th>SHIPPING CHARGES</th>
-                                <td colspan="2">Rs. <div id="nothing1" style="display:none;"> 10 </div> <div id="nothing2" style="display:none;"> 0 </div></td>
-                            </tr>
-                            <tr>
-                                <th class="empty" colspan="3"></th>
-                                <th>TOTAL</th>
-                                <th colspan="2" class="total">Rs. <div id="nothing11" style="display:none;">{{total|add:"10"}}.00</div> <div id="nothing22" style="display:none;">{{total}}</div> </th>
-                            </tr>
+                                <tr>
+                                    <th class="empty" colspan="3"></th>
+                                    <th>SUBTOTAL</th>
+                                    <th colspan="2" class="sub-total">Rs. {{ total}}</th>
+                                </tr>
+                                <tr>
+                                    <th class="empty" colspan="3"></th>
+                                    <th>SHIPPING CHARGES</th>
+                                    <td colspan="2">Rs. <div id="nothing1" style="display:none;"> 10 </div> <div id="nothing2" style="display:none;"> 0 </div></td>
+                                </tr>
+                                <tr>
+                                    <th class="empty" colspan="3"></th>
+                                    <th>TOTAL</th>
+                                    <th colspan="2" class="total">Rs. <div id="nothing11" style="display:none;">{{total|add:"10"}}.00</div> <div id="nothing22" style="display:none;">{{total}}</div> </th>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /section -->
-		{% comment %} <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' ></script>
-		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script> {% endcomment %}
-{% comment %} <script>
-    function dislaydeliverycharge() {
-      var element = document.getElementById("id_deloptionselection_0");
-      var element2 = document.getElementById("id_deloptionselection_1");
-      if (element.checked) {
-          document.getElementById('nothing1').style.display = 'inline';
-          document.getElementById('nothing2').style.display = 'none';
-          document.getElementById('nothing11').style.display = 'inline';
-          document.getElementById('nothing22').style.display = 'none';
-      }
-      else if (element2.checked) {
-          document.getElementById('nothing2').style.display = 'inline';
-          document.getElementById('nothing1').style.display = 'none';
-          document.getElementById('nothing22').style.display = 'inline';
-          document.getElementById('nothing11').style.display = 'none';
-      }
-      else {
-          document.getElementById('nothing1').style.display = 'none';
-          document.getElementById('nothing2').style.display = 'none';
-          document.getElementById('nothing11').style.display = 'none';
-          document.getElementById('nothing22').style.display = 'none';
-      }
-    }
-    function yesnoCheck() {
-      if (document.getElementById('stn').checked) {
-          document.getElementById('stnfilter').style.display = 'block';
-          document.getElementById('postfilter').style.display = 'none';
-          document.getElementById('dor1filter').style.display = 'none';
-          document.getElementById('dor2filter').style.display = 'none';
-      }
-      else if (document.getElementById('post').checked) {
-          document.getElementById('postfilter').style.display = 'block';
-          document.getElementById('stnfilter').style.display = 'none';
-          document.getElementById('dor1filter').style.display= 'none';
-          document.getElementById('dor2filter').style.display = 'none';
-      }
-      else if (document.getElementById('dor1').checked) {
-          document.getElementById('dor1filter').style.display = 'block';
-          document.getElementById('postfilter').style.display = 'none';
-          document.getElementById('stnfilter').style.display = 'none';
-          document.getElementById('dor2filter').style.display = 'none';
-      }
-      else if (document.getElementById('dor2').checked) {
-          document.getElementById('dor2filter').style.display = 'block';
-          document.getElementById('postfilter').style.display = 'none';
-          document.getElementById('stnfilter').style.display = 'none';
-          document.getElementById('dor1filter').style.display = 'none';
-      }
-      else {
-          document.getElementById('stnfilter').style.display = 'none';
-          document.getElementById('postfilter').style.display = 'none';
-          document.getElementById('dor1filter').style.display = 'none';
-          document.getElementById('dor2filter').style.display = 'none';
-      }
-    }
-
-    $('#thisform1').bootstrapValidator({
-feedbackIcons: {
-	valid: 'glyphicon glyphicon-ok',
-	invalid: 'glyphicon glyphicon-remove',
-	validating: 'glyphicon glyphicon-refresh'
-},
-fields: {
-	ccardnumber: {
-		validators: {
-			numeric: {
-				message: 'Card Must must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter Card Number'
-			},
-			stringLength: {
-				min: 16,
-				max: 16,
-				message: 'Card Should be of 16 digits'
-			}
-		}
-	},
-	cexpmonth: {
-		validators: {
-			numeric: {
-				message: 'Expiry month must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter Expiry Month'
-			},
-			stringLength: {
-				max: 2,
-				message: 'Enter Expiry month'
-			}
-		}
-	},
-	cexpyear: {
-		validators: {
-			numeric: {
-				message: 'Expiry Year must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter Expiry Year'
-			},
-			stringLength: {
-			    min: 4,
-				max: 4,
-				message: 'Enter Expiry year'
-			}
-		}
-	},
-	cnameoncard: {
-		validators: {
-			notEmpty: {
-				message: 'Please Enter Name on Card'
-			},
-			stringLength: {
-			    min: 2,
-				max: 100,
-				message: 'Enter Valid value'
-			}
-		}
-	},
-    ccvv: {
-		validators: {
-			numeric: {
-				message: 'CVV must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter CVV'
-			},
-			stringLength: {
-			    min: 3,
-				max: 3,
-				message: 'Enter 3 digit CVV'
-			}
-		}
-	}
-	}
-});
-    $('#thisform2').bootstrapValidator({
-feedbackIcons: {
-	valid: 'glyphicon glyphicon-ok',
-	invalid: 'glyphicon glyphicon-remove',
-	validating: 'glyphicon glyphicon-refresh'
-},
-fields: {
-	dcardnumber: {
-		validators: {
-			numeric: {
-				message: 'Card Must must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter Card Number'
-			},
-			stringLength: {
-				min: 16,
-				max: 16,
-				message: 'Card Should be of 16 digits'
-			}
-		}
-	},
-	dexpmonth: {
-		validators: {
-			numeric: {
-				message: 'Expiry month must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter Expiry Month'
-			},
-			stringLength: {
-				max: 2,
-				message: 'Enter Expiry month'
-			}
-		}
-	},
-	dexpyear: {
-		validators: {
-			numeric: {
-				message: 'Expiry Year must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter Expiry Year'
-			},
-			stringLength: {
-			    min: 4,
-				max: 4,
-				message: 'Enter Expiry year'
-			}
-		}
-	},
-	dnameoncard: {
-		validators: {
-			notEmpty: {
-				message: 'Please Enter Name on Card'
-			},
-			stringLength: {
-			    min: 2,
-				max: 100,
-				message: 'Enter Valid value'
-			}
-		}
-	},
-    dcvv: {
-		validators: {
-			numeric: {
-				message: 'CVV must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter CVV'
-			},
-			stringLength: {
-			    min: 3,
-				max: 3,
-				message: 'Enter 3 digit CVV'
-			}
-		}
-	}
-	}
-});
-
-    $('#thisform3').bootstrapValidator({
-feedbackIcons: {
-	valid: 'glyphicon glyphicon-ok',
-	invalid: 'glyphicon glyphicon-remove',
-	validating: 'glyphicon glyphicon-refresh'
-},
-fields: {
-	upiid: {
-		validators: {
-			notEmpty: {
-				message: 'Please Enter UPI ID'
-			},
-			stringLength: {
-				min: 5,
-				max: 100,
-				message: 'Enter Valid value'
-			},
-			regexp: {
-                regexp: /^[a-z0-9_@.]+$/,
-                message: 'UPI ID can only consist of alphabets, numbers, _ , @ and .'
-            }
-		}
-	}
-	}
-});
-
-
-    $('#thisform4').bootstrapValidator({
-feedbackIcons: {
-	valid: 'glyphicon glyphicon-ok',
-	invalid: 'glyphicon glyphicon-remove',
-	validating: 'glyphicon glyphicon-refresh'
-},
-fields: {
-	paytmnumber: {
-		validators: {
-			numeric: {
-				message: 'Mobile number must be a number'
-			},
-			notEmpty: {
-				message: 'Please Enter your mobile number'
-			},
-			stringLength: {
-				min: 10,
-				max: 10,
-				message: 'Mobile number should be of 10 digits'
-			}
-		}
-	}
-	}
-});
-</script>
-{% endcomment %}
 <script>
-	    function hideButton()
-    {
-      document.getElementById('stnfilter').style.display = 'none';
-      document.getElementById('postfilter').style.display = 'none';
-      document.getElementById('dor1filter').style.display = 'none';
-      document.getElementById('dor2filter').style.display = 'none';
-      var w = document.getElementsByTagName('input');
-      for(var i = 0; i < w.length; i++){
-        if(w[i].type=='radio'){
-          w[i].checked = false;
+	function hideButton(){
+        document.getElementById('stnfilter').style.display = 'none';
+        document.getElementById('postfilter').style.display = 'none';
+        document.getElementById('dor1filter').style.display = 'none';
+        document.getElementById('dor2filter').style.display = 'none';
+
+        var w = document.getElementsByTagName('input');
+        for(var i = 0; i < w.length; i++){
+            if(w[i].type=='radio'){
+                w[i].checked = false;
+            }
         }
-      }
     }
 </script>
-
 {% endblock %}
 {% block footer %}{% include 'footer4.html' %}{% endblock %}
