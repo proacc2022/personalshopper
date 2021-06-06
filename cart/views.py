@@ -312,6 +312,7 @@ def ok404(request, exception=None):
     category = Category.objects.all()
     return render(request, '404.html', {'category': category})
 
+
 def ok500(request, exception=None):
     category = Category.objects.all()
     return render(request, '500.html', {'category': category})

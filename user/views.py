@@ -35,15 +35,20 @@ def index(request):
                'profile2': profile2}
     return render(request, 'user_profile.html', context)
 
+
 def login_excluded(redirect_to):
-    """ This decorator kicks authenticated users out of a view """ 
+    """ This decorator kicks authenticated users out of a view """
+
     def _method_wrapper(view_method):
         def _arguments_wrapper(request, *args, **kwargs):
             if request.user.is_authenticated:
-                return redirect(redirect_to) 
+                return redirect(redirect_to)
             return view_method(request, *args, **kwargs)
+
         return _arguments_wrapper
+
     return _method_wrapper
+
 
 @login_excluded('/')
 def login_form(request):
@@ -70,6 +75,7 @@ def logout_func(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+
 @login_excluded('/')
 def newsignup(request):
     if request.method == 'POST':
@@ -92,9 +98,10 @@ def newsignup(request):
             ok2.save()
             return HttpResponseRedirect('/')
         else:
-            val=form.errors
+            val = form.errors
             print(form.errors)
-            if '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(val):
+            if '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(
+                    val):
                 messages.warning(request, 'A user with that username already exists. Please try a different username.')
                 print(form.errors)
                 return HttpResponseRedirect('/signup')
@@ -120,17 +127,21 @@ def user_update(request):
             user_form.save()
             return HttpResponseRedirect('/user')
         else:
-            val=user_form.errors
+            val = user_form.errors
             print(user_form.errors)
-            if '<li>email<ul class="errorlist"><li>Enter a valid email address.</li></ul></li>' in str(val) and '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(val):
-                messages.warning(request, 'A user with that username already exists. <br> Email is invalid. Correct the email input.')
+            if '<li>email<ul class="errorlist"><li>Enter a valid email address.</li></ul></li>' in str(
+                    val) and '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(
+                    val):
+                messages.warning(request,
+                                 'A user with that username already exists. <br> Email is invalid. Correct the email input.')
                 print(user_form.errors)
                 return HttpResponseRedirect('/user/updateprofile/')
             if '<li>email<ul class="errorlist"><li>Enter a valid email address.</li></ul></li>' in str(val):
                 messages.warning(request, 'Email is invalid. Correct the email input.')
                 print(user_form.errors)
                 return HttpResponseRedirect('/user/updateprofile/')
-            if '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(val):
+            if '<li>username<ul class="errorlist"><li>A user with that username already exists.</li></ul></li>' in str(
+                    val):
                 messages.warning(request, 'A user with that username already exists.')
                 print(user_form.errors)
                 return HttpResponseRedirect('/user/updateprofile/')
@@ -161,24 +172,24 @@ def user_addressupdate(request):
             return redirect('index')
         else:
             print(formset.errors)
-            val=formset.errors
+            val = formset.errors
             if "['This field is required.']" in str(val):
                 messages.warning(request, 'Missing Address details.')
                 print(formset.errors)
     print("2")
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
-    ii=0
+    ii = 0
     for form in formset:
-        ii=ii+1
+        ii = ii + 1
     print(ii)
-    jj=0
+    jj = 0
     for form in formset:
-        if jj<ii-1:
+        if jj < ii - 1:
             for fields in form:
                 if str(fields.label) != 'Delete':
                     fields.field.widget.attrs['required'] = 'true'
-            jj=jj+1
+            jj = jj + 1
     context = {
         'category': category,
         'formset': formset
@@ -200,17 +211,17 @@ def user_contactupdate(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
-    ii=0
+    ii = 0
     for form in formset:
-        ii=ii+1
+        ii = ii + 1
     print(ii)
-    jj=0
+    jj = 0
     for form in formset:
-        if jj<ii-1:
+        if jj < ii - 1:
             for fields in form:
                 if str(fields.label) != 'Delete':
                     fields.field.widget.attrs['required'] = 'true'
-            jj=jj+1
+            jj = jj + 1
     context = {
         'category': category,
         'formset': formset
@@ -229,13 +240,17 @@ def user_password(request):
             update_session_auth_hash(request, user)  # Important!
             return HttpResponseRedirect('/user')
         else:
-            val=form.errors
+            val = form.errors
             print(form.errors)
-            if '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(val) and '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(val):
-                messages.warning(request, 'Your old password was entered incorrectly. Please enter it again. <br> The two password fields didn’t match. Try Again.')
+            if '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(
+                    val) and '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(
+                    val):
+                messages.warning(request,
+                                 'Your old password was entered incorrectly. Please enter it again. <br> The two password fields didn’t match. Try Again.')
                 print(form.errors)
                 return HttpResponseRedirect('/user/password/')
-            if '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(val):
+            if '<li>old_password<ul class="errorlist"><li>Your old password was entered incorrectly. Please enter it again.</li></ul></li>' in str(
+                    val):
                 messages.warning(request, 'Your old password was entered incorrectly. Please enter it again.')
                 print(form.errors)
                 return HttpResponseRedirect('/user/password/')
@@ -364,10 +379,12 @@ def password_reset_request(request):
                   context={"password_reset_form": password_reset_form})
 
 
+@login_required(login_url='/login')  # Check login
 def user_managepayment(request):
     return render(request=request, template_name="managepayment.html")
 
 
+@login_required(login_url='/login')  # Check login
 def ccuser_managepayment(request):
     current_user = request.user  # Access User Session information
     ty = current_user.id
@@ -384,24 +401,24 @@ def ccuser_managepayment(request):
             return redirect('index')
         else:
             print(formset.errors)
-            val=formset.errors
+            val = formset.errors
             if "['This field is required.']" in str(val):
                 messages.warning(request, 'Invalid credit card details.')
                 print(formset.errors)
     print("2")
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
-    ii=0
+    ii = 0
     for form in formset:
-        ii=ii+1
+        ii = ii + 1
     print(ii)
-    jj=0
+    jj = 0
     for form in formset:
-        if jj<ii-1:
+        if jj < ii - 1:
             for fields in form:
                 if str(fields.label) != 'Delete':
                     fields.field.widget.attrs['required'] = 'true'
-            jj=jj+1
+            jj = jj + 1
     context = {
         'category': category,
         'formset': formset
@@ -409,13 +426,14 @@ def ccuser_managepayment(request):
     return render(request, 'user_creditcardupdate.html', context)
 
 
+@login_required(login_url='/login')  # Check login
 def dcuser_managepayment(request):
     current_user = request.user  # Access User Session information
     ty = current_user.id
     pare = User.objects.get(pk=ty)
     chilFormset = inlineformset_factory(User, User4Profile,
                                         form=AddDebitCard,
-                                        extra=1,)
+                                        extra=1, )
     if request.method == 'POST':
         print("1")
         formset = chilFormset(request.POST, instance=pare)
@@ -425,23 +443,23 @@ def dcuser_managepayment(request):
             return redirect('index')
         else:
             print(formset.errors)
-            val=formset.errors
+            val = formset.errors
             if "['This field is required.']" in str(val):
                 messages.warning(request, 'Invalid debit card details.')
                 print(formset.errors)
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
-    ii=0
+    ii = 0
     for form in formset:
-        ii=ii+1
+        ii = ii + 1
     print(ii)
-    jj=0
+    jj = 0
     for form in formset:
-        if jj<ii-1:
+        if jj < ii - 1:
             for fields in form:
                 if str(fields.label) != 'Delete':
                     fields.field.widget.attrs['required'] = 'true'
-            jj=jj+1
+            jj = jj + 1
     context = {
         'category': category,
         'formset': formset
@@ -449,6 +467,7 @@ def dcuser_managepayment(request):
     return render(request, 'user_debitcardupdate.html', context)
 
 
+@login_required(login_url='/login')  # Check login
 def user_upimanagepayment(request):
     current_user = request.user  # Access User Session information
     ty = current_user.id
@@ -462,17 +481,17 @@ def user_upimanagepayment(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
-    ii=0
+    ii = 0
     for form in formset:
-        ii=ii+1
+        ii = ii + 1
     print(ii)
-    jj=0
+    jj = 0
     for form in formset:
-        if jj<ii-1:
+        if jj < ii - 1:
             for fields in form:
                 if str(fields.label) != 'Delete':
                     fields.field.widget.attrs['required'] = 'true'
-            jj=jj+1
+            jj = jj + 1
     context = {
         'category': category,
         'formset': formset
@@ -480,6 +499,7 @@ def user_upimanagepayment(request):
     return render(request, 'user_upiupdate.html', context)
 
 
+@login_required(login_url='/login')  # Check login
 def user_paytmmanagepayment(request):
     current_user = request.user  # Access User Session information
     ty = current_user.id
@@ -493,17 +513,17 @@ def user_paytmmanagepayment(request):
             return redirect('index')
     category = Category.objects.all()
     formset = chilFormset(instance=pare)
-    ii=0
+    ii = 0
     for form in formset:
-        ii=ii+1
+        ii = ii + 1
     print(ii)
-    jj=0
+    jj = 0
     for form in formset:
-        if jj<ii-1:
+        if jj < ii - 1:
             for fields in form:
                 if str(fields.label) != 'Delete':
                     fields.field.widget.attrs['required'] = 'true'
-            jj=jj+1
+            jj = jj + 1
     context = {
         'category': category,
         'formset': formset
