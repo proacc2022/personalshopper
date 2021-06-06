@@ -91,7 +91,7 @@ def search(request):
                 except EmptyPage:
                     products = paginator.page(paginator.num_pages)
             else:
-                products = Product.objects.filter(category=catid)
+                products = Product.objects.none()
             print(products)
             p = list(products)
             print(p)
