@@ -137,14 +137,14 @@ body {
 }
 .msger-send-btn {
 	margin-left: 10px;
-	background: #0d0fc1;
+	background: #ff9f00;
 	color: #fff;
 	font-weight: bold;
 	cursor: pointer;
 	transition: background 0.23s;
 }
 .msger-send-btn:hover {
-	background: #1008fb;
+	background: #ffbc4e;
 }
 
 .msger-chat {

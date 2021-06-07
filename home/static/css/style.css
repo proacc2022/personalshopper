@@ -127,13 +127,13 @@ hr {
 
 .primary-btn {
 	color: #fff;
-	background-color: #0d0fc1;
+	background-color: #ff9f00;
 }
 
 .primary-btn:hover,
 .primary-btn:focus {
 	color: #fff;
-	background-color: #30323a;
+	background-color: #ffbc4e;
 }
 
 .input {
